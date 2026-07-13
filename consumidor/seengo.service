@@ -1,0 +1,39 @@
+# Servicio systemd para arrancar el tablero SEENGO al encender la Raspberry Pi.
+#
+# Instalación en la Pi (una sola vez):
+#   1. Ajusta las rutas de abajo (WorkingDirectory / ExecStart) y el User a los
+#      de tu Pi. El ejemplo asume el repo en /home/pi/seengo y un venv en
+#      /home/pi/seengo/.venv.
+#   2. Pon tu conexión en /home/pi/seengo/.env (MONGO_URI, etc.). systemd la
+#      carga con EnvironmentFile (ver abajo). NO escribas la contraseña aquí.
+#   3. Copia e inicia:
+#        sudo cp consumidor/seengo.service /etc/systemd/system/seengo.service
+#        sudo systemctl daemon-reload
+#        sudo systemctl enable --now seengo.service
+#   4. Revisa que quedó arriba:
+#        systemctl status seengo.service
+#        journalctl -u seengo.service -f      # ver el log en vivo
+#
+# En la Pi (Linux) NO hace falta el paquete tzdata: la base de zonas horarias
+# viene con el sistema. (tzdata solo se instala en Windows para desarrollo.)
+
+[Unit]
+Description=SEENGO — tablero de rutinas del hogar (servidor en vivo)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/home/pi/seengo
+EnvironmentFile=/home/pi/seengo/.env
+# Opcionales (si no, usa los defaults del servidor):
+Environment=SEENGO_PORT=8000
+Environment=SEENGO_DIAS=60
+Environment=SEENGO_REFRESH_MIN=30
+ExecStart=/home/pi/seengo/.venv/bin/python consumidor/servidor.py
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

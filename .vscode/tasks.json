@@ -1,0 +1,46 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "SEENGO: instalar dependencias",
+      "type": "shell",
+      "command": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "args": ["-m", "pip", "install", "-r", "requirements.txt"],
+      "problemMatcher": []
+    },
+    {
+      "label": "SEENGO: probar offline (datos de ejemplo)",
+      "type": "shell",
+      "command": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "args": ["consumidor/consumir_mongo.py", "--archivos", "datos/ejemplos_*.json"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "group": { "kind": "build", "isDefault": true },
+      "problemMatcher": []
+    },
+    {
+      "label": "SEENGO: correr contra Mongo Atlas",
+      "type": "shell",
+      "command": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "args": ["consumidor/consumir_mongo.py", "--dias", "60"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "SEENGO: abrir vista en el navegador",
+      "type": "shell",
+      "command": "start",
+      "args": ["", "pantalla/index.html"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "SEENGO: servidor en vivo (tablero web)",
+      "type": "shell",
+      "command": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "args": ["consumidor/servidor.py"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "isBackground": true,
+      "problemMatcher": []
+    }
+  ]
+}

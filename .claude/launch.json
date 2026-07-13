@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "seengo-pantalla",
+      "runtimeExecutable": ".venv/Scripts/python.exe",
+      "runtimeArgs": ["-m", "http.server", "8765"],
+      "port": 8765
+    },
+    {
+      "name": "seengo-vivo",
+      "runtimeExecutable": ".venv/Scripts/python.exe",
+      "runtimeArgs": ["consumidor/servidor.py"],
+      "port": 8000
+    }
+  ]
+}

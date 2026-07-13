@@ -1,0 +1,2826 @@
+[
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.84,
+    "deviceId": "enchufe-sala",
+    "action": "off",
+    "ts": "2026-05-01T08:08:34.626698+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.92,
+    "deviceId": "enchufe-sala",
+    "action": "off",
+    "ts": "2026-05-01T08:09:01.033421+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.87,
+    "deviceId": "enchufe-sala",
+    "action": "off",
+    "ts": "2026-05-01T08:09:04.249676+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "paz",
+    "confidence": 0.99,
+    "deviceId": "enchufe-sala",
+    "action": "toggle",
+    "ts": "2026-05-01T08:09:14.224440+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "paz",
+    "confidence": 0.96,
+    "deviceId": "enchufe-sala",
+    "action": "toggle",
+    "ts": "2026-05-01T08:09:16.994433+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "palma_abierta",
+    "confidence": 0.92,
+    "deviceId": "enchufe-sala",
+    "action": "on",
+    "ts": "2026-05-01T08:09:19.028619+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "palma_abierta",
+    "confidence": 0.95,
+    "deviceId": "enchufe-sala",
+    "action": "on",
+    "ts": "2026-05-01T08:09:21.893446+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "palma_abierta",
+    "confidence": 0.98,
+    "deviceId": "enchufe-sala",
+    "action": "on",
+    "ts": "2026-05-01T08:09:33.233044+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "palma_abierta",
+    "confidence": 1.0,
+    "deviceId": "enchufe-sala",
+    "action": "on",
+    "ts": "2026-05-01T08:09:36.108458+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.85,
+    "deviceId": "enchufe-sala",
+    "action": "off",
+    "ts": "2026-05-01T08:09:53.964990+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.96,
+    "deviceId": "enchufe-sala",
+    "action": "off",
+    "ts": "2026-05-01T08:09:56.437058+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "paz",
+    "confidence": 0.96,
+    "deviceId": "enchufe-sala",
+    "action": "toggle",
+    "ts": "2026-05-01T08:10:45.763789+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.8,
+    "deviceId": "enchufe-sala",
+    "action": "off",
+    "ts": "2026-05-01T08:11:17.127688+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.92,
+    "deviceId": "enchufe-sala",
+    "action": "off",
+    "ts": "2026-05-01T08:11:22.011506+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.84,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-02T00:40:00+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.95,
+    "deviceId": "foco-cocina",
+    "action": "off",
+    "ts": "2026-05-02T20:15:00+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.84,
+    "deviceId": "foco-cocina",
+    "action": "off",
+    "ts": "2026-05-02T20:15:03.923254+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.9,
+    "deviceId": "foco-cocina",
+    "action": "off",
+    "ts": "2026-05-02T20:15:07.662644+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "paz",
+    "confidence": 0.92,
+    "deviceId": "foco-sala",
+    "action": "toggle",
+    "ts": "2026-05-03T04:31:00+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "paz",
+    "confidence": 1.0,
+    "deviceId": "foco-sala",
+    "action": "toggle",
+    "ts": "2026-05-03T14:21:00+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "palma_abierta",
+    "confidence": 0.84,
+    "deviceId": "foco-sala",
+    "action": "on",
+    "ts": "2026-05-04T10:14:00+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "palma_abierta",
+    "confidence": 0.92,
+    "deviceId": "foco-sala",
+    "action": "on",
+    "ts": "2026-05-04T10:14:02.379836+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "palma_abierta",
+    "confidence": 0.89,
+    "deviceId": "foco-sala",
+    "action": "on",
+    "ts": "2026-05-04T10:14:06.995115+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.86,
+    "deviceId": "enchufe-sala",
+    "action": "off",
+    "ts": "2026-05-04T14:41:00+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.96,
+    "deviceId": "enchufe-sala",
+    "action": "off",
+    "ts": "2026-05-04T14:41:02.178016+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.99,
+    "deviceId": "enchufe-sala",
+    "action": "off",
+    "ts": "2026-05-04T14:41:06.076369+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.98,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-06T10:13:00+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.92,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-06T10:13:04.024911+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.84,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-06T10:13:06.665814+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.95,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-06T13:49:00+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "palma_abierta",
+    "confidence": 0.87,
+    "deviceId": "enchufe-sala",
+    "action": "on",
+    "ts": "2026-05-07T08:10:01.520283+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "palma_abierta",
+    "confidence": 0.96,
+    "deviceId": "enchufe-sala",
+    "action": "on",
+    "ts": "2026-05-07T08:10:05.127689+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.93,
+    "deviceId": "enchufe-sala",
+    "action": "off",
+    "ts": "2026-05-07T08:11:02.874107+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.85,
+    "deviceId": "enchufe-sala",
+    "action": "off",
+    "ts": "2026-05-07T08:11:09.436176+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.96,
+    "deviceId": "enchufe-sala",
+    "action": "off",
+    "ts": "2026-05-07T08:11:11.216507+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.83,
+    "deviceId": "enchufe-sala",
+    "action": "off",
+    "ts": "2026-05-07T08:11:26.260017+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "paz",
+    "confidence": 0.87,
+    "deviceId": "enchufe-sala",
+    "action": "toggle",
+    "ts": "2026-05-07T08:11:42.359333+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "paz",
+    "confidence": 0.98,
+    "deviceId": "enchufe-sala",
+    "action": "toggle",
+    "ts": "2026-05-07T08:11:45.337614+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.98,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-08T03:24:00+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.99,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-08T03:24:02.007294+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.88,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-08T03:24:05.099762+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.81,
+    "deviceId": "foco-cocina",
+    "action": "off",
+    "ts": "2026-05-08T10:40:00+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.95,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-08T12:44:00+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.86,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-08T12:44:02.269487+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "paz",
+    "confidence": 0.89,
+    "deviceId": "foco-recamara",
+    "action": "toggle",
+    "ts": "2026-05-09T12:42:00+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "paz",
+    "confidence": 0.82,
+    "deviceId": "enchufe-sala",
+    "action": "toggle",
+    "ts": "2026-05-10T04:52:00+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "paz",
+    "confidence": 0.9,
+    "deviceId": "enchufe-sala",
+    "action": "toggle",
+    "ts": "2026-05-10T04:52:04.499408+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "paz",
+    "confidence": 0.92,
+    "deviceId": "enchufe-sala",
+    "action": "toggle",
+    "ts": "2026-05-10T04:52:09.484233+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.89,
+    "deviceId": "foco-recamara",
+    "action": "off",
+    "ts": "2026-05-10T06:48:00+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.91,
+    "deviceId": "foco-recamara",
+    "action": "off",
+    "ts": "2026-05-10T06:48:02.341790+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.95,
+    "deviceId": "foco-recamara",
+    "action": "off",
+    "ts": "2026-05-10T06:48:03.885270+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.89,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-11T04:43:00+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.95,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:00:00+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.99,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:00:04.817262+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.99,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:00:06.863448+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.9,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:00:10.274958+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.86,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:00:14.040312+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.99,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:00:18.676233+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 1.0,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:00:22.815799+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.96,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:00:26.649906+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.98,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:00:30.699809+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.82,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:00:33.385205+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.81,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:00:36.561639+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.82,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:00:40.434668+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.92,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:00:42.021453+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.87,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:00:44.292730+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.92,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:00:46.935013+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.91,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:00:49.118037+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.95,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:00:53.352529+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.82,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:00:55.537534+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.94,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:01:00.010614+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 1.0,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:01:04.862297+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.9,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:01:07.742780+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.9,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:01:11.353882+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.93,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:01:13.050049+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.94,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:01:15.941502+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.88,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:01:18.938244+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.87,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:01:20.480912+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.89,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:01:23.059211+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.84,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:01:26.522827+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.95,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:01:31.130144+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.89,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:01:34.084778+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.95,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:01:36.158044+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.95,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:01:40.800077+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.97,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:01:43.749755+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.83,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:01:47.342530+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 1.0,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:01:49.903839+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.87,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:01:53.242393+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.92,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:01:58.008428+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.8,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:02:00.823631+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.85,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:02:04.559452+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.89,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:02:06.671578+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.98,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:02:10.159285+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.97,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:02:12.356686+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.9,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:02:14.869807+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.86,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:02:19.249604+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.9,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:02:22.797833+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.84,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:02:26.887329+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.83,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:02:31.156597+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.93,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:02:33.707190+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.82,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:02:37.435153+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.86,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:02:41.265850+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.98,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:02:43.393653+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.81,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:02:47.150403+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.9,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:02:51.326917+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.92,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:02:56.224106+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.9,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:02:58.990264+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.85,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:03:02.016504+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.99,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:03:05.917199+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.87,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:03:10.281182+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.8,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:03:14.346532+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.92,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:03:16.754912+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.89,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:03:18.766392+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.87,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:03:22.692883+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.87,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:03:24.377992+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.99,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:03:28.104857+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.86,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:03:29.775359+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.82,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:03:33.511672+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.93,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:03:35.690024+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.92,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:03:39.866437+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.86,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:03:41.951413+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.97,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:03:44.558150+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.85,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:03:48.857720+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.87,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:03:52.800606+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.87,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:03:56.171077+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.83,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:03:58.174088+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.96,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:04:00.659050+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.98,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:04:03.601031+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.84,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:04:05.671633+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.97,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:04:08.933473+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.91,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:04:13.216347+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.99,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:04:17.130132+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.94,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:04:21.591376+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.96,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:04:25.549303+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.98,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:04:28.510015+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.83,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:04:30.417995+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.87,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:04:31.978823+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.83,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:04:35.897500+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 1.0,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:04:38.944283+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.99,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:04:42.275207+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.86,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:04:44.377932+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.82,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:04:48.483543+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.94,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:04:50.434044+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.86,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:04:54.342209+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 1.0,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:04:56.576653+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.95,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:04:59.563471+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.8,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:05:01.454499+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.89,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:05:04.649391+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.81,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:05:06.836619+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.92,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:05:10.645880+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.98,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:05:13.787668+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.86,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:05:15.439153+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.82,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:05:16.975106+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.92,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:05:18.908383+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.84,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:05:22.464994+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.81,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:05:26.312096+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.95,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:05:28.321545+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.92,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:05:30.792360+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.97,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:05:33.525071+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.92,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:05:37.757878+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.81,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:05:41.025060+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.95,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:05:45.393613+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.94,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:05:48.744549+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.83,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:05:53.619472+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.8,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:05:57.758535+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.98,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:06:01.797258+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.97,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:06:06.518928+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.94,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:06:09.680432+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.93,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:06:11.828372+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.97,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:06:13.704008+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.88,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:06:18.638562+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.88,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:06:21.938441+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.86,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:06:26.103374+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.9,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:06:29.234030+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.87,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:06:32.469386+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.94,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:06:34.978335+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.9,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:06:36.766203+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.89,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:06:39.612937+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.94,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:06:43.689547+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.85,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:06:48.133363+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 1.0,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:06:51.058851+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.97,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:06:54.056717+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.96,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:06:58.688358+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.87,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:07:03.475145+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.93,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:07:05.019895+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.88,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:07:08.872229+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.94,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:07:12.201547+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.88,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:07:14.118809+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 1.0,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:07:18.051439+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.98,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:07:22.146452+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.87,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:07:24.236983+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.84,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:07:26.433785+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.88,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:07:30.887888+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.88,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:07:33.202932+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.95,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:07:36.449817+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.92,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:07:40.630720+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.96,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:07:44.777780+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.87,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:07:49.579068+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.99,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:07:53.412438+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.9,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:07:58.368769+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.89,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:08:00.384578+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.9,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:08:02.312243+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.99,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:08:04.620119+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.95,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:08:06.224151+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.9,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:08:10.630245+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.84,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:08:12.223866+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.87,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:08:15.839910+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.92,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:08:18.399544+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.93,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:08:22.560144+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.9,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:08:25.879965+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.86,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:08:29.011041+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.9,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:08:32.253688+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.96,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:08:35.652221+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.8,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:08:39.044072+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 1.0,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:08:43.217949+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.82,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:08:47.798389+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.97,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:08:50.873793+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.81,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:08:53.922740+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.93,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:08:56.041782+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.98,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:09:00.269621+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.89,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:09:02.344126+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.88,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:09:04.937735+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.91,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:09:09.111774+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.91,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:09:12.328712+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.89,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:09:15.716585+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.83,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:09:19.184479+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.85,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:09:20.879559+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.88,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:09:24.448217+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.95,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:09:28.315924+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.81,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:09:30.811455+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.83,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:09:34.378077+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.96,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:09:37.160512+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.95,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:09:40.704396+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.88,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:09:44.392432+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 1.0,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:09:47.390951+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.81,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:09:50.332705+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.85,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:09:52.687506+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.82,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:09:55.279854+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.97,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:09:59.187823+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.83,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:10:01.088473+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.81,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:10:04.472932+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.88,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:10:08.275119+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.88,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:10:11.576778+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.89,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:10:13.148186+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.86,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:10:14.726014+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.86,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:10:18.222251+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.9,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:10:20.064291+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.84,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:10:23.982315+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.96,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:10:27.220875+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.83,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:10:31.056731+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.99,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:10:33.605054+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.93,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:10:35.811209+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.82,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:10:40.720584+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.84,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:10:45.196754+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.86,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:10:47.624797+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.96,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:10:51.132119+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.99,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:10:54.818122+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.92,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:10:58.830096+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.85,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:11:02.401622+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.91,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:11:05.884121+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.87,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:11:08.878992+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.96,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:11:10.647308+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.86,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:11:13.913546+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.86,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:11:17.735644+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.85,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:11:20.685744+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.93,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:11:23.989536+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.98,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:11:27.406005+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.9,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:11:31.103459+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.9,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:11:33.256345+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.96,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:11:37.069167+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.85,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:11:41.852527+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.96,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:11:45.585269+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.98,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:11:50.069980+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.95,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:11:54.841206+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.84,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:11:56.550792+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.85,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:11:59.669495+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.95,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:12:03.782012+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.88,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:12:08.236439+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.98,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:12:12.747090+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.97,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:12:16.465836+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.86,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:12:18.900108+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.94,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:12:20.962153+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.85,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:12:23.288607+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.81,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:12:25.313475+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.86,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:12:29.603132+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 1.0,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:12:32.801970+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.98,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:12:35.779037+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.85,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:12:37.986004+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.96,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:12:39.588001+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.91,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:12:42.060203+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.81,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:12:45.815231+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.96,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:12:49.843890+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.98,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:12:51.537535+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.86,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:12:54.136202+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.99,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:12:55.858738+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.93,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:13:00.497444+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.88,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:13:05.097462+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.97,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:13:09.536799+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.91,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:13:11.862943+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.82,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:13:15.113813+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.92,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:13:18.938573+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.91,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-12T09:13:23.151479+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "palma_abierta",
+    "confidence": 0.83,
+    "deviceId": "foco-sala",
+    "action": "on",
+    "ts": "2026-05-12T13:06:00+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "palma_abierta",
+    "confidence": 0.91,
+    "deviceId": "foco-sala",
+    "action": "on",
+    "ts": "2026-05-12T13:06:03.107490+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.8,
+    "deviceId": "enchufe-sala",
+    "action": "off",
+    "ts": "2026-05-13T16:37:04.976313+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.87,
+    "deviceId": "enchufe-sala",
+    "action": "off",
+    "ts": "2026-05-13T16:37:20.255748+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "palma_abierta",
+    "confidence": 0.86,
+    "deviceId": "enchufe-sala",
+    "action": "on",
+    "ts": "2026-05-13T16:37:48.018076+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "palma_abierta",
+    "confidence": 0.82,
+    "deviceId": "enchufe-sala",
+    "action": "on",
+    "ts": "2026-05-13T16:37:51.533409+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.95,
+    "deviceId": "enchufe-sala",
+    "action": "off",
+    "ts": "2026-05-13T16:38:54.807715+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.94,
+    "deviceId": "enchufe-sala",
+    "action": "off",
+    "ts": "2026-05-13T16:38:57.220095+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "paz",
+    "confidence": 0.94,
+    "deviceId": "enchufe-sala",
+    "action": "toggle",
+    "ts": "2026-05-13T16:40:23.270503+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "paz",
+    "confidence": 0.97,
+    "deviceId": "enchufe-sala",
+    "action": "toggle",
+    "ts": "2026-05-13T17:08:00+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "paz",
+    "confidence": 0.94,
+    "deviceId": "enchufe-sala",
+    "action": "toggle",
+    "ts": "2026-05-13T17:08:03.693838+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "paz",
+    "confidence": 0.95,
+    "deviceId": "foco-cocina",
+    "action": "toggle",
+    "ts": "2026-05-14T07:42:00+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "paz",
+    "confidence": 0.87,
+    "deviceId": "enchufe-sala",
+    "action": "toggle",
+    "ts": "2026-05-14T20:42:00+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "paz",
+    "confidence": 0.83,
+    "deviceId": "foco-sala",
+    "action": "toggle",
+    "ts": "2026-05-15T14:48:00+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "paz",
+    "confidence": 0.91,
+    "deviceId": "foco-sala",
+    "action": "toggle",
+    "ts": "2026-05-15T14:48:02.672254+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "paz",
+    "confidence": 0.95,
+    "deviceId": "foco-sala",
+    "action": "toggle",
+    "ts": "2026-05-15T14:48:06.443888+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "palma_abierta",
+    "confidence": 0.89,
+    "deviceId": "foco-cocina",
+    "action": "on",
+    "ts": "2026-05-16T04:41:00+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.9,
+    "deviceId": "enchufe-sala",
+    "action": "off",
+    "ts": "2026-05-16T11:02:00+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.81,
+    "deviceId": "enchufe-sala",
+    "action": "off",
+    "ts": "2026-05-16T11:02:02.980252+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.97,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-16T16:51:00+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.89,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-16T16:51:04.648079+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.93,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-16T16:51:07.436589+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "palma_abierta",
+    "confidence": 0.82,
+    "deviceId": "foco-recamara",
+    "action": "on",
+    "ts": "2026-05-19T08:06:00+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "palma_abierta",
+    "confidence": 0.82,
+    "deviceId": "foco-recamara",
+    "action": "on",
+    "ts": "2026-05-19T08:06:02.076682+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.87,
+    "deviceId": "enchufe-sala",
+    "action": "off",
+    "ts": "2026-05-19T20:39:21.374704+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.94,
+    "deviceId": "enchufe-sala",
+    "action": "off",
+    "ts": "2026-05-19T20:39:28.442964+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.97,
+    "deviceId": "enchufe-sala",
+    "action": "off",
+    "ts": "2026-05-19T20:39:30.609869+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "palma_abierta",
+    "confidence": 0.94,
+    "deviceId": "enchufe-sala",
+    "action": "on",
+    "ts": "2026-05-19T20:39:47.583889+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "palma_abierta",
+    "confidence": 0.88,
+    "deviceId": "enchufe-sala",
+    "action": "on",
+    "ts": "2026-05-19T20:39:49.674535+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.89,
+    "deviceId": "enchufe-sala",
+    "action": "off",
+    "ts": "2026-05-19T20:40:31.697644+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.84,
+    "deviceId": "enchufe-sala",
+    "action": "off",
+    "ts": "2026-05-19T20:40:33.920765+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "palma_abierta",
+    "confidence": 0.89,
+    "deviceId": "enchufe-sala",
+    "action": "on",
+    "ts": "2026-05-19T20:41:52.460022+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "palma_abierta",
+    "confidence": 0.96,
+    "deviceId": "foco-cocina",
+    "action": "on",
+    "ts": "2026-05-22T21:28:00+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.91,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-23T04:51:00+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.87,
+    "deviceId": "foco-sala",
+    "action": "off",
+    "ts": "2026-05-23T04:51:01.962096+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.96,
+    "deviceId": "foco-recamara",
+    "action": "off",
+    "ts": "2026-05-23T19:10:00+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.85,
+    "deviceId": "foco-recamara",
+    "action": "off",
+    "ts": "2026-05-23T19:10:02.101080+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.99,
+    "deviceId": "foco-recamara",
+    "action": "off",
+    "ts": "2026-05-23T19:10:05.295931+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "paz",
+    "confidence": 0.96,
+    "deviceId": "foco-recamara",
+    "action": "toggle",
+    "ts": "2026-05-23T21:28:00+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "paz",
+    "confidence": 0.93,
+    "deviceId": "foco-recamara",
+    "action": "toggle",
+    "ts": "2026-05-23T21:28:03.201519+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "paz",
+    "confidence": 0.89,
+    "deviceId": "enchufe-sala",
+    "action": "toggle",
+    "ts": "2026-05-25T23:24:20.577282+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "paz",
+    "confidence": 0.99,
+    "deviceId": "enchufe-sala",
+    "action": "toggle",
+    "ts": "2026-05-25T23:24:25.127334+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.83,
+    "deviceId": "enchufe-sala",
+    "action": "off",
+    "ts": "2026-05-25T23:25:38.045784+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.87,
+    "deviceId": "enchufe-sala",
+    "action": "off",
+    "ts": "2026-05-25T23:25:53.023782+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "puno",
+    "confidence": 0.98,
+    "deviceId": "enchufe-sala",
+    "action": "off",
+    "ts": "2026-05-25T23:26:28.243258+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "palma_abierta",
+    "confidence": 0.95,
+    "deviceId": "enchufe-sala",
+    "action": "on",
+    "ts": "2026-05-25T23:26:50.028760+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "palma_abierta",
+    "confidence": 0.82,
+    "deviceId": "enchufe-sala",
+    "action": "on",
+    "ts": "2026-05-25T23:26:52.425550+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "paz",
+    "confidence": 0.86,
+    "deviceId": "enchufe-sala",
+    "action": "toggle",
+    "ts": "2026-05-26T12:50:00+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "palma_abierta",
+    "confidence": 0.81,
+    "deviceId": "foco-cocina",
+    "action": "on",
+    "ts": "2026-05-27T16:35:00+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "palma_abierta",
+    "confidence": 1.0,
+    "deviceId": "enchufe-sala",
+    "action": "on",
+    "ts": "2026-05-27T22:38:00+00:00"
+  },
+  {
+    "userId": "migueldr12",
+    "gesture": "paz",
+    "confidence": 0.82,
+    "deviceId": "foco-recamara",
+    "action": "toggle",
+    "ts": "2026-05-28T09:33:00+00:00"
+  }
+]

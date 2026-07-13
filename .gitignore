@@ -1,0 +1,14 @@
+# Entorno / dependencias
+.venv/
+__pycache__/
+*.pyc
+
+# Secretos (nunca subir)
+.env
+
+# Salidas generadas por el consumidor (se regeneran con un run)
+/resultados.json
+/pantalla/resultados.js
+
+# Editor
+.vscode/*.log

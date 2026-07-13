@@ -1,0 +1,45 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "SEENGO: probar offline (datos de ejemplo)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/consumidor/consumir_mongo.py",
+      "args": ["--archivos", "datos/ejemplos_claros.json", "datos/ejemplos_dificiles.json", "datos/ejemplos_basura.json"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "justMyCode": true
+    },
+    {
+      "name": "SEENGO: correr contra Mongo Atlas (60 días)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/consumidor/consumir_mongo.py",
+      "args": ["--dias", "60"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "justMyCode": true,
+      "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "name": "SEENGO: servidor en vivo (tablero web)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/consumidor/servidor.py",
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "justMyCode": true,
+      "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "name": "SEENGO: regenerar datos de ejemplo",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/datos/generar_datos.py",
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "justMyCode": true
+    }
+  ]
+}
