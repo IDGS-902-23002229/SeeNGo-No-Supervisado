@@ -93,11 +93,37 @@ la librería estándar + pymongo; nada pesado.
 ```
 
 Desde otro dispositivo de la misma red (tu celular, otra compu) entra a
-`http://IP-DE-LA-PI:8000/`. La página sondea `/api/resultados.json` cada 2 min
+`http://IP-DE-LA-PI:8000/`. La página sondea `/api/fuentes.json` cada 2 min
 y se re-dibuja sola cuando hay datos nuevos.
 
 Ajustes por variable de entorno (o en `.env`): `SEENGO_PORT` (8000),
 `SEENGO_DIAS` (60), `SEENGO_REFRESH_MIN` (30).
+
+### Dos fuentes en el tablero (Atlas vs. ejemplo)
+
+El tablero puede mostrar **dos orígenes de datos**, elegibles con una pestaña
+arriba del título:
+
+- **Atlas** — tus datos reales de MongoDB (en vivo con el servidor).
+- **Datos de ejemplo** — el set de referencia del repo, útil para comparar
+  contra una casa con semanas de historia (14 rutinas, ausencia, etc.).
+
+La pestaña aparece sólo cuando hay **al menos dos fuentes** disponibles. Cómo
+se llenan:
+
+- El **servidor en vivo** calcula ambas solo (Atlas al refrescar, ejemplo una
+  vez al arrancar). No tienes que hacer nada.
+- En modo manual (sin servidor), corre el consumidor **una vez por fuente** y
+  quedan las dos en `resultados.js` (cada corrida conserva la otra):
+
+  ```powershell
+  .venv\Scripts\python consumidor\consumir_mongo.py --archivos "datos/ejemplos_*.json"
+  .venv\Scripts\python consumidor\consumir_mongo.py --dias 60
+  ```
+
+Internamente, `resultados.js` guarda un envelope
+`window.SEENGO_FUENTES = { atlas, local }`. La pantalla acepta también el
+formato viejo de una sola fuente, así que nada se rompe.
 
 **Importante — por qué no es la pantalla la que habla con Mongo:** el navegador
 solo habla con *este servidor*; las credenciales viven en el servidor (la Pi),

@@ -151,6 +151,21 @@ Salida esperada de la prueba offline (regresión rápida):
 - `consumidor/seengo.service`: unit systemd de ejemplo para arrancar en la Pi.
 - Vars: `SEENGO_PORT` (8000), `SEENGO_DIAS` (60), `SEENGO_REFRESH_MIN` (30).
 
+## Dos fuentes en el tablero (2026-07-13)
+
+- La pantalla ofrece una pestaña que alterna entre `atlas` (Mongo real, en
+  vivo) y `local` (set de ejemplo del repo). Redibuja todo el tablero al
+  cambiar. La pestaña sólo aparece si hay ≥2 fuentes.
+- Formato de datos: envelope `{atlas, local}`. `consumir_mongo.py` escribe
+  `window.SEENGO_FUENTES = {atlas, local}` y **conserva la otra fuente** entre
+  corridas (rellena solo la suya según `--archivos`→local / `--dias`→atlas).
+  El servidor calcula `local` una vez al arrancar y refresca `atlas`; expone
+  `/api/fuentes.json` (envelope) y conserva `/api/resultados.json` (solo atlas)
+  por compatibilidad. `index.html` acepta el envelope nuevo o el
+  `window.SEENGO_RESULTADOS` viejo de una sola fuente (no rompe nada).
+- `meta.fuente` ("atlas"/"local") es un campo aditivo; no cambia detección.
+  `modelo/` sigue intacto.
+
 ## Cuidado especial
 
 - No reintroducir dependencias pesadas en `modelo/`.
