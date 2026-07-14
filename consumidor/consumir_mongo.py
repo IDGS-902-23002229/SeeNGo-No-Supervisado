@@ -37,6 +37,9 @@ except ImportError:
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "modelo"))
 from detector_rutinas import analizar, CONFIG  # noqa: E402
+from sugerencias import generar_sugerencias, resumen_aceptacion  # noqa: E402
+
+RAIZ = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
 
 def _mapear(doc):
@@ -80,6 +83,84 @@ def leer_archivos(patrones):
             eventos += json.load(open(ruta, encoding="utf-8"))
     print(f"Archivos: {len(eventos)} eventos leídos.")
     return eventos
+
+
+# ----------------------------------------------------------------------
+# Sugerencias en Mongo (colección aparte, default: "sugerencias").
+# El modelo genera candidatas; aquí solo se publican (sin duplicar) y se
+# leen las respuestas del usuario (`aceptada`: 1 sí / 0 no / null pendiente).
+# ----------------------------------------------------------------------
+def _cliente():
+    try:
+        from pymongo import MongoClient
+    except ImportError:
+        sys.exit("Falta pymongo. Instala con:  pip install pymongo")
+    uri = os.environ.get("MONGO_URI")
+    if not uri:
+        sys.exit("Define MONGO_URI en el entorno (no la escribas en el código).")
+    return MongoClient(uri, serverSelectionTimeoutMS=8000)
+
+
+def _coll_sugerencias(cli):
+    db = os.environ.get("MONGO_DB", "seengo")
+    coll = os.environ.get("MONGO_COLL_SUG", "sugerencias")
+    return cli[db][coll]
+
+
+def publicar_sugerencias(nuevas):
+    """Upsert por `clave`: solo inserta las que no existan. Nunca pisa la
+    respuesta (`aceptada`) de una sugerencia ya publicada."""
+    if not nuevas:
+        return 0
+    col = _coll_sugerencias(_cliente())
+    creada = datetime.now(ZoneInfo("UTC")).isoformat()
+    insertadas = 0
+    for s in nuevas:
+        r = col.update_one(
+            {"clave": s["clave"]},
+            {"$setOnInsert": {**s, "creada": creada,
+                              "aceptada": None, "respondida": None}},
+            upsert=True)
+        if r.upserted_id is not None:
+            insertadas += 1
+    return insertadas
+
+
+def leer_sugerencias():
+    col = _coll_sugerencias(_cliente())
+    return list(col.find({}, {"_id": 0}))
+
+
+def responder_sugerencia(clave, aceptada):
+    """Registra la respuesta del usuario: aceptada=1 (sí) o 0 (no)."""
+    col = _coll_sugerencias(_cliente())
+    r = col.update_one(
+        {"clave": clave},
+        {"$set": {"aceptada": int(aceptada),
+                  "respondida": datetime.now(ZoneInfo("UTC")).isoformat()}})
+    return r.matched_count > 0
+
+
+def sugerencias_local():
+    """Resumen de aceptación del set de ejemplo del repo (fuente 'local').
+    OJO: el archivo NO se llama ejemplos_*.json a propósito, para no caer en
+    el glob de eventos de ejemplo."""
+    ruta = os.path.join(RAIZ, "datos", "sugerencias_ejemplo.json")
+    try:
+        with open(ruta, encoding="utf-8") as fh:
+            return resumen_aceptacion(json.load(fh))
+    except FileNotFoundError:
+        return resumen_aceptacion([])
+
+
+def sugerencias_atlas(res):
+    """Publica en Mongo las sugerencias nuevas que salgan del análisis y
+    devuelve el resumen con TODAS (incluidas las respuestas del usuario)."""
+    nuevas = generar_sugerencias(res)
+    n = publicar_sugerencias(nuevas)
+    if n:
+        print(f"Sugerencias nuevas publicadas en Mongo: {n}")
+    return resumen_aceptacion(leer_sugerencias())
 
 
 # ----------------------------------------------------------------------
@@ -136,6 +217,10 @@ def main():
     res["meta"]["generado"] = datetime.now(ZoneInfo(CONFIG["tz"])).isoformat()
     res["meta"]["fuente"] = fuente
 
+    # sugerencias + aceptación (aditivo: la pantalla lo muestra si existe)
+    res["sugerencias"] = (sugerencias_local() if fuente == "local"
+                          else sugerencias_atlas(res))
+
     env = _leer_envelope()      # conserva la otra fuente si ya existía
     env[fuente] = res
     _escribir_envelope(env)
@@ -146,6 +231,9 @@ def main():
     conf = sum(1 for s in res["streams"] for v in s["vistas"].values()
                for r in v["rutinas"] if r["confirmada"])
     print(f"Rutinas confirmadas: {conf} | Ausencia: {res['ausencia_larga']['nivel']}")
+    sug = res["sugerencias"]
+    print(f"Sugerencias: {sug['total']} ({sug['aceptadas']} sí / "
+          f"{sug['rechazadas']} no / {sug['pendientes']} pendientes)")
     otras = [k for k in ("atlas", "local") if env.get(k) and k != fuente]
     if otras:
         print(f"(se conservó la fuente '{otras[0]}' del resultado previo)")

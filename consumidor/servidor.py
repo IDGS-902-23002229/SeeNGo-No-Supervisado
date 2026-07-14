@@ -49,7 +49,12 @@ except ImportError:
 
 # Reutiliza la lógica de Mongo y de archivos del consumidor (no se duplica).
 sys.path.insert(0, os.path.dirname(__file__))
-from consumir_mongo import leer_mongo, leer_archivos, analizar, CONFIG  # noqa: E402
+from consumir_mongo import (  # noqa: E402
+    leer_mongo, leer_archivos, analizar, CONFIG,
+    sugerencias_local, sugerencias_atlas, leer_sugerencias,
+    responder_sugerencia,
+)
+from sugerencias import resumen_aceptacion  # noqa: E402
 
 # ----------------------------------------------------------------------
 # Configuración desde el entorno
@@ -89,18 +94,33 @@ def calcular_local():
         print(f"[servidor] sin datos de ejemplo en {EJEMPLOS} (fuente 'local' omitida)")
         return None
     eventos = leer_archivos([EJEMPLOS])
-    return _analizar(eventos, None, "local")   # ahora=None: sin racha abierta
+    res = _analizar(eventos, None, "local")    # ahora=None: sin racha abierta
+    res["sugerencias"] = sugerencias_local()
+    return res
 
 
 def refrescar_atlas():
     """Lee Mongo y corre el modelo. Lanza excepción si algo falla."""
     eventos = leer_mongo(DIAS)
     res = _analizar(eventos, _ahora_local(), "atlas")   # detecta ausencia en curso
+    res["sugerencias"] = sugerencias_atlas(res)  # publica nuevas + lee respuestas
     with _lock:
         _estado["atlas"] = res
         _estado["error"] = None
     _escribir_js()
     return res
+
+
+def _refrescar_solo_sugerencias():
+    """Tras una respuesta del usuario: relee la colección de sugerencias y
+    actualiza el resumen de atlas sin re-consultar todos los eventos."""
+    resumen = resumen_aceptacion(leer_sugerencias())
+    with _lock:
+        if _estado["atlas"] is not None:
+            _estado["atlas"]["sugerencias"] = resumen
+            _estado["atlas"]["meta"]["generado"] = _ahora_local().isoformat()
+    _escribir_js()
+    return resumen
 
 
 # ----------------------------------------------------------------------
@@ -164,9 +184,33 @@ class Handler(SimpleHTTPRequestHandler):
             return self._json(salud)
         return super().do_GET()
 
-    def _json(self, obj):
+    def do_POST(self):
+        """POST /api/sugerencias/responder  {"clave": ..., "aceptada": 1|0}
+        Registra en Mongo la respuesta del usuario a una sugerencia."""
+        if self.path.split("?")[0] != "/api/sugerencias/responder":
+            self.send_error(404)
+            return
+        try:
+            n = int(self.headers.get("Content-Length", 0))
+            datos = json.loads(self.rfile.read(n) or b"{}")
+            clave = datos["clave"]
+            aceptada = int(datos["aceptada"])
+            assert aceptada in (0, 1)
+        except Exception:                              # noqa: BLE001
+            return self._json({"ok": False, "error": "cuerpo inválido"}, 400)
+        try:
+            if not responder_sugerencia(clave, aceptada):
+                return self._json({"ok": False, "error": "clave no encontrada"}, 404)
+            resumen = _refrescar_solo_sugerencias()
+            print(f"[servidor] sugerencia respondida: {clave} -> "
+                  f"{'sí' if aceptada else 'no'}")
+            return self._json({"ok": True, "sugerencias": resumen})
+        except Exception as e:                          # noqa: BLE001
+            return self._json({"ok": False, "error": str(e)}, 500)
+
+    def _json(self, obj, status=200):
         cuerpo = json.dumps(obj, ensure_ascii=False, default=str).encode("utf-8")
-        self.send_response(200)
+        self.send_response(status)
         self.send_header("Content-Type", "application/json; charset=utf-8")
         self.send_header("Content-Length", str(len(cuerpo)))
         self.send_header("Cache-Control", "no-store")
