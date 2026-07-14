@@ -125,6 +125,30 @@
   .hmhours span{text-align:center}
   .drop{border:1px dashed var(--line);border-radius:12px;padding:26px;text-align:center;color:var(--muted);
     font-family:var(--mono);font-size:13px;margin-top:20px}
+
+  /* sugerencias y aceptación */
+  .sugwrap{display:grid;grid-template-columns:235px minmax(0,1fr);gap:22px;margin-top:4px}
+  @media(max-width:820px){.sugwrap{grid-template-columns:1fr}}
+  .tasa .big{font-family:var(--mono);font-size:44px;font-weight:650;line-height:1.1}
+  .tasa .lbl{font-size:12px;color:var(--muted)}
+  .sugbar{display:flex;height:10px;border-radius:999px;overflow:hidden;background:var(--panel-2);
+    margin:12px 0 10px}
+  .sugbar i{display:block;height:100%}
+  .sugcounts{font-family:var(--mono);font-size:11.5px;color:var(--muted);display:flex;
+    flex-direction:column;gap:4px}
+  .sugcounts b{color:var(--ink)}
+  .sugitem{display:flex;gap:11px;align-items:flex-start;padding:10px 12px;border:1px solid var(--line);
+    border-radius:10px;margin-bottom:8px;background:var(--panel-2)}
+  .sugitem .est{font-size:15px;flex:0 0 20px;text-align:center;font-family:var(--mono)}
+  .sugitem .msg{font-size:13px;flex:1;min-width:0}
+  .sugitem .sub{font-family:var(--mono);font-size:10.5px;color:var(--muted);margin-top:3px}
+  .sugbtns{display:flex;gap:6px;flex:0 0 auto}
+  .sugbtns button{font-family:var(--mono);font-size:11px;border-radius:8px;border:1px solid var(--line);
+    background:var(--panel);color:var(--ink);padding:5px 11px;cursor:pointer}
+  .sugbtns button:hover{border-color:#4a5378}
+  .sugbtns button:disabled{opacity:.4;cursor:default}
+  .est-si{color:var(--ok)} .est-no{color:var(--alert)} .est-pend{color:#e6b93e}
+
   a.mono{color:#8fb4ff;font-family:var(--mono);text-decoration:none}
   @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
@@ -163,6 +187,14 @@
   <div class="card" style="margin-top:18px">
     <div class="eyebrow" style="margin-bottom:10px">De ruido a señal</div>
     <div class="funnel" id="funnel"></div>
+  </div>
+
+  <div class="card" style="margin-top:18px;display:none" id="sugCard">
+    <div class="eyebrow" style="margin-bottom:10px">Sugerencias · ¿las está aceptando?</div>
+    <div class="sugwrap">
+      <div class="tasa" id="sugTasa"></div>
+      <div id="sugList"></div>
+    </div>
   </div>
 
   <div class="devgroup" id="detail"></div>
@@ -345,6 +377,68 @@ function drawHeatmap(host, grid, color){
   host.appendChild(hrs);
 }
 
+// ---------------------------------------------------------------
+// Sugerencias y aceptación (1 = sí, 0 = no, null = pendiente).
+// En modo servidor (http) y fuente Atlas, las pendientes traen botones
+// Sí/No que registran la respuesta en Mongo vía POST.
+// ---------------------------------------------------------------
+function drawSugerencias(){
+  const card=document.getElementById('sugCard');
+  const s=DATA.sugerencias;
+  if(!s||!s.total){card.style.display='none';return;}
+  card.style.display='';
+  const resp=s.aceptadas+s.rechazadas;
+  const tasa=s.tasa_aceptacion==null?'—':Math.round(s.tasa_aceptacion*100)+'%';
+  const seg=(n,c)=>n?`<i style="width:${(n/s.total*100).toFixed(1)}%;background:${c}"></i>`:'';
+  document.getElementById('sugTasa').innerHTML=
+    `<div class="big">${tasa}</div>`+
+    `<div class="lbl">tasa de aceptación${resp?` · ${s.aceptadas} de ${resp} respondidas`:' · sin respuestas aún'}</div>`+
+    `<div class="sugbar">${seg(s.aceptadas,getVar('--ok'))}${seg(s.rechazadas,getVar('--alert'))}${seg(s.pendientes,'#3a3f5c')}</div>`+
+    `<div class="sugcounts"><span><b>${s.aceptadas}</b> aceptadas (sí)</span>`+
+    `<span><b>${s.rechazadas}</b> rechazadas (no)</span>`+
+    `<span><b>${s.pendientes}</b> pendientes</span></div>`;
+  const list=document.getElementById('sugList'); list.innerHTML='';
+  const puedeResponder=location.protocol.indexOf('http')===0&&FUENTE==='atlas';
+  s.lista.forEach(it=>{
+    const el=document.createElement('div'); el.className='sugitem';
+    const est=it.aceptada===1?'<span class="est est-si">✓</span>'
+      :it.aceptada===0?'<span class="est est-no">✗</span>'
+      :'<span class="est est-pend">…</span>';
+    const sub=[it.tipo,it.contexto,it.nivel,
+      it.respondida?('respondida '+String(it.respondida).slice(0,10)):'pendiente']
+      .filter(Boolean).join(' · ');
+    el.innerHTML=`${est}<div class="msg">${it.mensaje}<div class="sub">${sub}</div></div>`;
+    if(it.aceptada==null&&puedeResponder){
+      const btns=document.createElement('div'); btns.className='sugbtns';
+      const mk=(t,v)=>{const b=document.createElement('button');b.textContent=t;
+        b.addEventListener('click',()=>responderSugerencia(it.clave,v,btns));return b;};
+      btns.appendChild(mk('Sí',1)); btns.appendChild(mk('No',0));
+      el.appendChild(btns);
+    }
+    list.appendChild(el);
+  });
+}
+
+async function responderSugerencia(clave,v,btns){
+  [...btns.querySelectorAll('button')].forEach(b=>b.disabled=true);
+  try{
+    const r=await fetch('/api/sugerencias/responder',{method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({clave:clave,aceptada:v})});
+    const d=await r.json();
+    if(d.ok){
+      if(FUENTES.atlas) FUENTES.atlas.sugerencias=d.sugerencias;
+      if(FUENTE==='atlas'){DATA.sugerencias=d.sugerencias;drawSugerencias();}
+    }else{
+      alert('No se pudo guardar: '+(d.error||'error desconocido'));
+      [...btns.querySelectorAll('button')].forEach(b=>b.disabled=false);
+    }
+  }catch(e){
+    alert('Sin conexión con el servidor en vivo.');
+    [...btns.querySelectorAll('button')].forEach(b=>b.disabled=false);
+  }
+}
+
 function renderAll(){
   const m=DATA.meta;
   const info=FUENTE_INFO[FUENTE];
@@ -359,7 +453,7 @@ function renderAll(){
       `<p>${a.mensaje}${a.ventana?` (${a.ventana.desde} → ${a.ventana.hasta})`:''}</p></div>`;
     host.appendChild(el);
   }
-  drawDial(); drawFunnel(); drawDetail();
+  drawDial(); drawFunnel(); drawSugerencias(); drawDetail();
 }
 
 document.getElementById('views').addEventListener('click',e=>{
