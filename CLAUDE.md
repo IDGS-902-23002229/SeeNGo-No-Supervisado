@@ -166,6 +166,27 @@ Salida esperada de la prueba offline (regresión rápida):
 - `meta.fuente` ("atlas"/"local") es un campo aditivo; no cambia detección.
   `modelo/` sigue intacto.
 
+## Sugerencias y aceptación (2026-07-14)
+
+- `modelo/sugerencias.py` (puro, sin deps): `generar_sugerencias(resultado)`
+  convierte clusters de entre_semana/fin_de_semana (+ ausencia) en sugerencias
+  con `clave` estable `rutina|dev|act|hhmm` (hora redondeada a 30 min, para no
+  duplicar entre corridas); `resumen_aceptacion(lista)` arma el resumen 1/0/
+  pendiente para el tablero.
+- Colección Mongo `sugerencias` (env `MONGO_COLL_SUG`). El consumidor/servidor
+  publican con upsert `$setOnInsert` por `clave` (NUNCA pisan `aceptada`).
+  Esquema: `{clave, mensaje, tipo, nivel, deviceId, action, hora_hhmm,
+  contexto, creada, aceptada: 1|0|null, respondida}`.
+- El servidor expone `POST /api/sugerencias/responder {clave, aceptada}` y la
+  pantalla pone botones Sí/No en las pendientes (solo fuente atlas + http).
+  Tras responder, se refresca solo la colección de sugerencias (no todos los
+  eventos) y se bumpea `meta.generado` para que otros clientes redibujen.
+- Fuente local: `datos/sugerencias_ejemplo.json` (demo con 6 sí/2 no/2 pend).
+  OJO: NO se llama `ejemplos_*.json` a propósito — ese glob carga EVENTOS y
+  meter ahí un JSON de sugerencias rompe la fuente local (bug ya vivido).
+- `res["sugerencias"]` va DENTRO de cada fuente del envelope (aditivo; la
+  pantalla oculta la sección si falta).
+
 ## Cuidado especial
 
 - No reintroducir dependencias pesadas en `modelo/`.
