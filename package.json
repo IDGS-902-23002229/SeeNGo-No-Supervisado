@@ -1,0 +1,10 @@
+{
+  "name": "seengo-pantalla",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Dependencias front-end de pantalla/index-chartjs.html (solo para vendorizar; no se ejecuta nada de esto en Node).",
+  "dependencies": {
+    "chart.js": "^4.5.1",
+    "chartjs-chart-matrix": "^3.0.5"
+  }
+}
