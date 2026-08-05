@@ -7,7 +7,7 @@ Modelo-DBscan/
 ├── datos/         # ejemplos JSON para importar a Mongo Atlas (+ generador)
 ├── modelo/        # el detector, Python puro (sin numpy/pandas/sklearn)
 ├── consumidor/    # lee Mongo (o los JSON) y produce resultados
-└── pantalla/      # vista de un solo archivo, sin servidor ni librerías
+└── pantalla/      # vista de un solo archivo, sin servidor (SVG o Chart.js)
 ```
 
 ## 0. Preparar el entorno (una sola vez)
@@ -43,6 +43,34 @@ de comandos → *Python: Select Interpreter*) y usa:
 
 Esto corre el modelo sobre los 3 archivos de ejemplo, escribe
 `resultados.json` y `pantalla/resultados.js`, y la pantalla los muestra.
+
+### Tablero alterno con Chart.js
+
+`pantalla/index-chartjs.html` es una segunda vista de los mismos datos
+(`resultados.js`), construida con [Chart.js](https://www.chartjs.org/) en vez
+de SVG a mano. Cinco gráficas: rutinas sobre el eje de 24 h, mapa de calor
+semanal por stream, embudo de ruido a señal, distribución de confianza e
+interacciones por hora del día. No calcula nada nuevo — lee exactamente los
+mismos campos que ya arma `modelo/detector_rutinas.py`.
+
+Igual que `index.html`, abre con doble clic (`file://`), sin servidor. Las
+librerías están **vendorizadas** en `pantalla/vendor/` (no por CDN): el
+tablero corre en una Raspberry Pi dentro de una casa y tiene que seguir
+graficando aunque se caiga el internet.
+
+Versiones exactas instaladas (`package.json`, para referencias APA):
+
+- **Chart.js** — v4.5.1
+- **chartjs-chart-matrix** — v3.0.5 (plugin del tipo `matrix` para el mapa
+  de calor; no lo trae Chart.js por defecto)
+
+Para regenerar `pantalla/vendor/` desde cero:
+
+```bash
+npm install chart.js chartjs-chart-matrix
+cp node_modules/chart.js/dist/chart.umd.min.js pantalla/vendor/
+cp node_modules/chartjs-chart-matrix/dist/chartjs-chart-matrix.min.js pantalla/vendor/
+```
 
 ## 2. Cargar los datos de ejemplo a Mongo Atlas
 
