@@ -37,7 +37,9 @@ except ImportError:
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "modelo"))
 from detector_rutinas import analizar, CONFIG  # noqa: E402
-from sugerencias import generar_sugerencias, resumen_aceptacion  # noqa: E402
+from recomendaciones import (  # noqa: E402
+    generar_recomendaciones, resumen_aceptacion,
+)
 
 RAIZ = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
@@ -129,8 +131,9 @@ def leer_mongo(dias=None):
 
 
 # ----------------------------------------------------------------------
-# Sugerencias en Mongo (colección aparte, default: "sugerencias").
-# El modelo genera candidatas; aquí solo se publican (sin duplicar) y se
+# Recomendaciones en Mongo (colección aparte, default: "sugerencias" — se
+# conserva el nombre para no huerfanar los documentos ya guardados).
+# El modelo genera las candidatas; aquí sólo se publican (sin duplicar) y se
 # leen las respuestas del usuario (`aceptada`: 1 sí / 0 no / null pendiente).
 # ----------------------------------------------------------------------
 def _cliente():
@@ -150,7 +153,7 @@ def _coll_sugerencias(cli):
     return cli[db][coll]
 
 
-def publicar_sugerencias(nuevas):
+def publicar_recomendaciones(nuevas):
     """Upsert por `clave`: solo inserta las que no existan. Nunca pisa la
     respuesta (`aceptada`) de una sugerencia ya publicada."""
     if not nuevas:
@@ -169,12 +172,12 @@ def publicar_sugerencias(nuevas):
     return insertadas
 
 
-def leer_sugerencias():
+def leer_recomendaciones():
     col = _coll_sugerencias(_cliente())
     return list(col.find({}, {"_id": 0}))
 
 
-def responder_sugerencia(clave, aceptada):
+def responder_recomendacion(clave, aceptada):
     """Registra la respuesta del usuario: aceptada=1 (sí) o 0 (no)."""
     col = _coll_sugerencias(_cliente())
     r = col.update_one(
@@ -184,14 +187,14 @@ def responder_sugerencia(clave, aceptada):
     return r.matched_count > 0
 
 
-def sugerencias_atlas(res):
-    """Publica en Mongo las sugerencias nuevas que salgan del análisis y
-    devuelve el resumen con TODAS (incluidas las respuestas del usuario)."""
-    nuevas = generar_sugerencias(res)
-    n = publicar_sugerencias(nuevas)
+def recomendaciones_atlas(res):
+    """Publica en Mongo las recomendaciones nuevas del análisis y devuelve el
+    resumen con TODAS (incluidas las respuestas ya dadas por el usuario)."""
+    nuevas = generar_recomendaciones(res)
+    n = publicar_recomendaciones(nuevas)
     if n:
-        print(f"Sugerencias nuevas publicadas en Mongo: {n}")
-    return resumen_aceptacion(leer_sugerencias())
+        print(f"Recomendaciones nuevas publicadas en Mongo: {n}")
+    return resumen_aceptacion(leer_recomendaciones())
 
 
 # ----------------------------------------------------------------------
@@ -211,7 +214,7 @@ def analizar_atlas(dias=None, conf_min=None):
     res["meta"]["generado"] = ahora.isoformat()
     res["meta"]["fuente"] = "atlas"
     res["meta"]["seleccion"] = seleccion           # fase 1, para el tablero
-    res["sugerencias"] = sugerencias_atlas(res)
+    res["recomendaciones"] = recomendaciones_atlas(res)   # fase 5
     return res
 
 
@@ -260,10 +263,10 @@ def main():
                for r in v["rutinas"] if r["confirmada"])
     print(f"Fase 3/4 · minería : {len(res['streams'])} streams, "
           f"{conf} rutinas confirmadas en {m['rango']['dias_activos']} días activos")
-    sug = res["sugerencias"]
+    rec = res["recomendaciones"]
     print(f"Fase 5 · uso       : ausencia={res['ausencia_larga']['nivel']}, "
-          f"{sug['total']} sugerencias ({sug['aceptadas']} sí / "
-          f"{sug['rechazadas']} no / {sug['pendientes']} pendientes)")
+          f"{rec['total']} recomendaciones ({rec['aceptadas']} sí / "
+          f"{rec['rechazadas']} no / {rec['pendientes']} pendientes)")
     print("\nEscrito: resultados.json y pantalla/resultados.js")
 
 
