@@ -3,8 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SEENGO · Rutinas del hogar</title>
+<title>SEENGO · Rutinas del hogar (Chart.js)</title>
 <style>
+  /* Misma paleta que pantalla/index.html (la versión SVG), copiada aquí a
+     propósito: cada pantalla es un archivo único y no comparten CSS, pero
+     los valores son idénticos para que ambas luzcan como el mismo tablero. */
   :root{
     --bg:#0e0f18; --panel:#171a29; --panel-2:#1e2133; --line:#2b2f45;
     --ink:#e9ebf6; --muted:#868bab;
@@ -13,21 +16,28 @@
     --toggle:#a98cf0;  /* alternar = violeta */
     --alert:#e8705a;
     --ok:#5bd6a0;
+    /* --on/--off/--toggle ya significan una ACCIÓN, no un nivel de
+       confianza: la gráfica 4 necesita su propio trío de colores para no
+       confundir "confirmada en ALTA" con "acción encender". Mismos hex que
+       usan los badges b-ALTA/b-MEDIA/b-BAJA de index.html, por consistencia
+       visual entre las dos pantallas. */
+    --conf-alta:#7ff0c0; --conf-media:#f5d67a; --conf-baja:#9aa0bf;
     --mono:ui-monospace,"SF Mono","Cascadia Code",Menlo,Consolas,monospace;
     --sans:system-ui,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
   }
   *{box-sizing:border-box}
   body{margin:0;background:radial-gradient(1200px 600px at 70% -10%,#1a1e33 0%,var(--bg) 55%);
     color:var(--ink);font-family:var(--sans);line-height:1.5;-webkit-font-smoothing:antialiased}
-  .wrap{max-width:1080px;margin:0 auto;padding:28px 20px 64px}
+  .wrap{max-width:1180px;margin:0 auto;padding:28px 20px 64px}
   .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.28em;text-transform:uppercase;
     color:var(--muted)}
   h1{font-size:30px;margin:4px 0 2px;font-weight:650;letter-spacing:-.01em}
   .sub{color:var(--muted);font-size:14px;font-family:var(--mono)}
   .card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px}
-  .grid{display:grid;gap:18px}
+  .card h2{margin:0 0 4px;font-size:15px;font-weight:600}
+  .help{margin:0 0 16px;font-size:12.5px;color:var(--muted);max-width:70ch}
 
-  /* alerta ausencia */
+  /* alerta de ausencia — idéntica a index.html */
   .alerta{display:flex;gap:14px;align-items:flex-start;border-radius:14px;padding:16px 18px;
     margin:22px 0;border:1px solid #4a2620;background:linear-gradient(90deg,#2a1712,#1b1522)}
   .alerta.aviso{border-color:#5a4a1c;background:linear-gradient(90deg,#241f10,#1b1a22)}
@@ -37,117 +47,30 @@
   .alerta h3{margin:0 0 2px;font-size:15px}
   .alerta p{margin:0;color:var(--muted);font-size:13px}
 
-  /* layout hero */
-  .hero{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:18px;margin-top:8px}
-  @media(max-width:820px){.hero{grid-template-columns:1fr}}
-  .dialwrap{display:flex;flex-direction:column;align-items:center;gap:14px}
-  svg .tick{stroke:var(--line);stroke-width:1}
-  svg .ticklab{fill:var(--muted);font-family:var(--mono);font-size:11px}
-  svg .ring{fill:none;stroke:#22263a;stroke-width:1}
-  .rut{cursor:pointer;transition:opacity .2s}
-  .rut.dim{opacity:.18}
-
-  .views{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
+  /* botonera de vistas — idéntica a index.html */
+  .views{display:flex;gap:6px;flex-wrap:wrap;margin:18px 0 22px}
   .views button{font-family:var(--mono);font-size:12px;letter-spacing:.04em;color:var(--muted);
     background:var(--panel-2);border:1px solid var(--line);border-radius:999px;padding:7px 13px;
     cursor:pointer}
   .views button[aria-pressed="true"]{color:var(--ink);border-color:#4a5378;background:#242a44}
   .views button:focus-visible{outline:2px solid #6ea8ff;outline-offset:2px}
 
-  /* selector de fuente de datos (Atlas vivo / ejemplo local) */
-  .fuentes{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 2px}
-  .fuentes button{font-family:var(--sans);font-size:13px;color:var(--muted);background:var(--panel);
-    border:1px solid var(--line);border-radius:11px;padding:9px 14px;cursor:pointer;
-    display:flex;align-items:center;gap:9px}
-  .fuentes button[aria-pressed="true"]{color:var(--ink);border-color:#4a5378;background:var(--panel-2)}
-  .fuentes button:focus-visible{outline:2px solid #6ea8ff;outline-offset:2px}
-  .fuentes .fdot{width:8px;height:8px;border-radius:50%;background:var(--muted);flex:0 0 auto}
-  .fuentes button[data-f="atlas"] .fdot{background:var(--ok)}
-  .fuentes button[data-f="local"] .fdot{background:var(--toggle)}
-  .fuentes .fsub{font-family:var(--mono);font-size:10px;color:var(--muted)}
+  /* selector de stream para el mapa de calor */
+  .mapahead{display:flex;align-items:baseline;justify-content:space-between;gap:12px;
+    flex-wrap:wrap;margin-bottom:4px}
+  select#selMapa{font-family:var(--mono);font-size:12px;color:var(--ink);background:var(--panel-2);
+    border:1px solid var(--line);border-radius:8px;padding:6px 10px}
 
-  .legend{display:flex;gap:16px;font-size:12px;color:var(--muted);font-family:var(--mono)}
-  .legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;
-    vertical-align:middle}
-
-  /* panel lateral: lista de rutinas confirmadas de la vista */
-  .list h4{margin:2px 0 12px;font-size:12px;font-family:var(--mono);letter-spacing:.2em;
-    text-transform:uppercase;color:var(--muted)}
-  .item{display:flex;align-items:center;gap:11px;padding:9px 8px;border-radius:10px;cursor:pointer}
-  .item:hover{background:var(--panel-2)}
-  .item .sw{width:9px;height:9px;border-radius:50%;flex:0 0 auto}
-  .item .h{font-family:var(--mono);font-size:15px;min-width:52px}
-  .item .d{font-size:12.5px;color:var(--muted);flex:1;min-width:0;overflow:hidden;
-    text-overflow:ellipsis;white-space:nowrap}
-  .badge{font-family:var(--mono);font-size:10px;letter-spacing:.08em;padding:2px 7px;border-radius:6px;
-    border:1px solid var(--line)}
-  .b-ALTA{color:#7ff0c0;border-color:#2c5a48}
-  .b-MEDIA{color:#f5d67a;border-color:#5a4f2a}
-  .b-BAJA{color:#9aa0bf}
-  .empty{color:var(--muted);font-size:13px;font-family:var(--mono)}
-
-  /* funnel */
-  .funnel{display:flex;gap:10px;align-items:stretch;margin-top:4px}
-  .fstep{flex:1;background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:14px}
-  .fstep .n{font-family:var(--mono);font-size:24px;font-weight:600}
-  .fstep .l{font-size:12px;color:var(--muted);margin-top:2px}
-  .fstep .arrow{color:var(--muted)}
-
-  /* detalle por stream */
-  .devgroup{margin-top:26px}
-  .devhead{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;
-    color:var(--muted);margin:22px 0 10px;border-bottom:1px solid var(--line);padding-bottom:6px}
-  .track{position:relative;height:44px;margin:8px 0 4px;background:
-    repeating-linear-gradient(90deg,transparent 0,transparent calc(100%/12 - 1px),
-    var(--line) calc(100%/12 - 1px),var(--line) calc(100%/12));border-radius:8px;
-    border:1px solid var(--line);background-color:#12142099}
-  .band{position:absolute;top:6px;bottom:6px;border-radius:6px;opacity:.9}
-  .band.un{opacity:.32;border:1px dashed #5a6088}
-  .trlabels{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;
-    color:var(--muted);margin-top:2px}
-  .streamrow{padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--panel);
-    margin-bottom:10px}
-  .streamtop{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
-  .streamtop .name{font-weight:600;font-size:14px}
-  .streamtop .act{font-family:var(--mono);font-size:11px;padding:1px 7px;border-radius:6px;border:1px solid var(--line)}
-  .streamtop .meta{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--muted)}
-  .tag{font-family:var(--mono);font-size:11px;color:var(--muted);margin-right:10px}
-
-  /* mapa de calor día x hora, por stream */
-  .heatmap{margin-top:12px}
-  .heatmap .hmtitle{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
-    color:var(--muted);margin-bottom:6px}
-  .hmgrid{display:grid;grid-template-columns:24px repeat(24,1fr);gap:2px;align-items:center}
-  .hmrow-label{font-family:var(--mono);font-size:9px;color:var(--muted);text-align:right;padding-right:4px}
-  .hmcell{height:11px;border-radius:2px;background:#2b2f4555}
-  .hmhours{grid-column:2/-1;display:grid;grid-template-columns:repeat(24,1fr);
-    font-family:var(--mono);font-size:8px;color:var(--muted);margin-top:3px}
-  .hmhours span{text-align:center}
-  .drop{border:1px dashed var(--line);border-radius:12px;padding:26px;text-align:center;color:var(--muted);
-    font-family:var(--mono);font-size:13px;margin-top:20px}
-
-  /* sugerencias y aceptación */
-  .sugwrap{display:grid;grid-template-columns:235px minmax(0,1fr);gap:22px;margin-top:4px}
-  @media(max-width:820px){.sugwrap{grid-template-columns:1fr}}
-  .tasa .big{font-family:var(--mono);font-size:44px;font-weight:650;line-height:1.1}
-  .tasa .lbl{font-size:12px;color:var(--muted)}
-  .sugbar{display:flex;height:10px;border-radius:999px;overflow:hidden;background:var(--panel-2);
-    margin:12px 0 10px}
-  .sugbar i{display:block;height:100%}
-  .sugcounts{font-family:var(--mono);font-size:11.5px;color:var(--muted);display:flex;
-    flex-direction:column;gap:4px}
-  .sugcounts b{color:var(--ink)}
-  .sugitem{display:flex;gap:11px;align-items:flex-start;padding:10px 12px;border:1px solid var(--line);
-    border-radius:10px;margin-bottom:8px;background:var(--panel-2)}
-  .sugitem .est{font-size:15px;flex:0 0 20px;text-align:center;font-family:var(--mono)}
-  .sugitem .msg{font-size:13px;flex:1;min-width:0}
-  .sugitem .sub{font-family:var(--mono);font-size:10.5px;color:var(--muted);margin-top:3px}
-  .sugbtns{display:flex;gap:6px;flex:0 0 auto}
-  .sugbtns button{font-family:var(--mono);font-size:11px;border-radius:8px;border:1px solid var(--line);
-    background:var(--panel);color:var(--ink);padding:5px 11px;cursor:pointer}
-  .sugbtns button:hover{border-color:#4a5378}
-  .sugbtns button:disabled{opacity:.4;cursor:default}
-  .est-si{color:var(--ok)} .est-no{color:var(--alert)} .est-pend{color:#e6b93e}
+  /* cuadrícula de tarjetas de gráficas */
+  .charts{display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:18px;
+    margin-top:20px}
+  .full{grid-column:1/-1}
+  .chartbox{position:relative;width:100%}
+  .chartbox.h-rutinas{height:540px}
+  .chartbox.h-mapa{height:360px}
+  .chartbox.h-embudo{height:260px}
+  .chartbox.h-confianza{height:300px}
+  .chartbox.h-horas{height:300px}
 
   a.mono{color:#8fb4ff;font-family:var(--mono);text-decoration:none}
   @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
@@ -155,405 +78,483 @@
 </head>
 <body>
 <div class="wrap">
-  <div class="eyebrow">SEENGO · detector de rutinas</div>
+  <div class="eyebrow">SEENGO · detector de rutinas · Chart.js</div>
   <h1>El día de esta casa</h1>
   <div class="sub" id="subtitle">cargando…</div>
 
-  <div class="fuentes" id="fuentes" role="group" aria-label="Fuente de datos" style="display:none"></div>
-
   <div id="alertHost"></div>
 
-  <div class="hero">
-    <div class="card dialwrap">
-      <div class="views" id="views" role="group" aria-label="Vista">
-        <button data-v="entre_semana" aria-pressed="true">Entre semana</button>
-        <button data-v="fin_de_semana" aria-pressed="false">Fin de semana</button>
-        <button data-v="semana_completa" aria-pressed="false">Semana completa</button>
+  <div class="views" id="views" role="group" aria-label="Vista">
+    <button data-v="entre_semana" aria-pressed="true">Entre semana</button>
+    <button data-v="fin_de_semana" aria-pressed="false">Fin de semana</button>
+    <button data-v="semana_completa" aria-pressed="false">Semana completa</button>
+  </div>
+
+  <div class="charts">
+
+    <div class="card full">
+      <h2>1 · Rutinas sobre el eje de 24 horas</h2>
+      <p class="help">Cada barra es una rutina: va de <em>hora − tolerancia</em> a
+        <em>hora + tolerancia</em>. Relleno sólido = confirmada; solo el borde = el
+        modelo la vio pero no juntó suficiente cobertura de días para confirmarla.</p>
+      <div class="chartbox h-rutinas"><canvas id="chRutinas"></canvas></div>
+    </div>
+
+    <div class="card full">
+      <div class="mapahead">
+        <div>
+          <h2>2 · Mapa de calor semanal</h2>
+          <p class="help">Interacciones por día y hora para el stream elegido. Mientras
+            más opaca la celda, más interacciones hubo esa hora.</p>
+        </div>
+        <select id="selMapa" aria-label="Stream del mapa de calor"></select>
       </div>
-      <svg id="dial" viewBox="0 0 560 560" width="100%" style="max-width:460px" role="img"
-           aria-label="Reloj de 24 horas con las rutinas detectadas"></svg>
-      <div class="legend">
-        <span><i style="background:var(--on)"></i>encender</span>
-        <span><i style="background:var(--off)"></i>apagar</span>
-        <span><i style="background:var(--toggle)"></i>alternar</span>
-      </div>
+      <div class="chartbox h-mapa"><canvas id="chMapa"></canvas></div>
     </div>
-    <div class="card list">
-      <h4>Rutinas confirmadas · <span id="viewName">entre semana</span></h4>
-      <div id="rutList"></div>
+
+    <div class="card">
+      <h2>3 · De ruido a señal</h2>
+      <p class="help">Eventos crudos → cuántos sobreviven al filtro de confianza →
+        cuántos quedan como interacciones tras colapsar ráfagas (debounce).</p>
+      <div class="chartbox h-embudo"><canvas id="chEmbudo"></canvas></div>
     </div>
-  </div>
 
-  <div class="card" style="margin-top:18px">
-    <div class="eyebrow" style="margin-bottom:10px">De ruido a señal</div>
-    <div class="funnel" id="funnel"></div>
-  </div>
-
-  <div class="card" style="margin-top:18px;display:none" id="sugCard">
-    <div class="eyebrow" style="margin-bottom:10px">Sugerencias · ¿las está aceptando?</div>
-    <div class="sugwrap">
-      <div class="tasa" id="sugTasa"></div>
-      <div id="sugList"></div>
+    <div class="card">
+      <h2>4 · Distribución de confianza</h2>
+      <p class="help">Rutinas de la vista activa por nivel de confianza (según la
+        cobertura de días que ya calculó el modelo).</p>
+      <div class="chartbox h-confianza"><canvas id="chConfianza"></canvas></div>
     </div>
-  </div>
 
-  <div class="devgroup" id="detail"></div>
+    <div class="card full">
+      <h2>5 · Interacciones por hora del día</h2>
+      <p class="help">Suma de todos los streams y todos los días. Es la verificación
+        cruzada de la gráfica 1: sus picos deben caer donde están las rutinas
+        confirmadas.</p>
+      <div class="chartbox h-horas"><canvas id="chHoras"></canvas></div>
+    </div>
 
-  <div class="drop" id="drop">
-    ¿Vacío? Genera los datos con el consumidor, o arrastra aquí un
-    <span style="color:var(--ink)">resultados.json</span>.
   </div>
 </div>
 
+<!-- Orden de carga obligatorio: Chart.js, el plugin de matriz (que depende
+     de Chart.js ya estar en window), los datos, y hasta el final el script
+     propio que arma las gráficas. Todo el tablero vive en este único
+     archivo (solo las librerías van aparte, vendorizadas en vendor/). -->
+<script src="vendor/chart.umd.min.js"></script>
+<script src="vendor/chartjs-chart-matrix.min.js"></script>
 <script src="resultados.js"></script>
 <script>
-const COL = {on:getVar('--on'), off:getVar('--off'), toggle:getVar('--toggle')};
-const INK=getVar('--ink'), MUT=getVar('--muted'), MONO=getVar('--mono')||'monospace';
-function getVar(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim()||'#888';}
-const CX=280, CY=280, R=220;
-let DATA=null, VIEW='entre_semana';
-let FUENTES={}, FUENTE=null;   // FUENTES[clave] = resultado del modelo
+/**
+ * SEENGO · tablero Chart.js
+ * =========================
+ * Esta capa NO calcula nada estadístico: lee los campos que ya arma
+ * `modelo/detector_rutinas.py` (vía `consumidor/consumir_mongo.py` y
+ * `resultados.js`), los mapea a datasets de Chart.js y les pone color desde
+ * las variables CSS de este archivo. La única transformación que se
+ * permite aquí es de FORMATO: aplanar una grilla, sumar columnas de
+ * `mapa_semanal`, restar dos contadores. Nada de promedios ni umbrales
+ * nuevos — eso ya lo hizo el modelo.
+ */
 
-function pt(hora, r){ // 0h arriba, sentido horario
-  const a = (hora/24)*2*Math.PI;
-  return [CX + r*Math.sin(a), CY - r*Math.cos(a)];
+// -----------------------------------------------------------------------
+// Paleta: una sola fuente de verdad (las variables CSS de :root). Nada de
+// colores sueltos dentro de los objetos de configuración de Chart.js.
+// -----------------------------------------------------------------------
+function getVar(nombre) {
+  return getComputedStyle(document.documentElement).getPropertyValue(nombre).trim();
 }
-function svgEl(t,attrs){const e=document.createElementNS('http://www.w3.org/2000/svg',t);
-  for(const k in attrs)e.setAttribute(k,attrs[k]);return e;}
+const ON = getVar('--on'), OFF = getVar('--off'), TOGGLE = getVar('--toggle');
+const PANEL = getVar('--panel'), LINE = getVar('--line'), MUT = getVar('--muted');
+const MONO = getVar('--mono') || 'monospace';
+const CONF_ALTA = getVar('--conf-alta');
+const CONF_MEDIA = getVar('--conf-media');
+const CONF_BAJA = getVar('--conf-baja');
 
-function drawDial(){
-  const svg=document.getElementById('dial'); svg.innerHTML='';
-  svg.appendChild(svgEl('circle',{cx:CX,cy:CY,r:R+22,class:'ring'}));
-  svg.appendChild(svgEl('circle',{cx:CX,cy:CY,r:R-40,class:'ring'}));
-  // ticks y etiquetas cada 2h
-  for(let h=0;h<24;h+=2){
-    const [x1,y1]=pt(h,R+22),[x2,y2]=pt(h,R+12);
-    svg.appendChild(svgEl('line',{x1,y1,x2,y2,class:'tick'}));
-    const [lx,ly]=pt(h,R+38);
-    const t=svgEl('text',{x:lx,y:ly+4,'text-anchor':'middle',class:'ticklab'});
-    t.textContent=String(h).padStart(2,'0'); svg.appendChild(t);
+function colorAccion(action) {
+  return action === 'on' ? ON : action === 'off' ? OFF : TOGGLE;
+}
+
+function hexToRgba(hex, alpha) {
+  const h = hex.replace('#', '');
+  const r = parseInt(h.substring(0, 2), 16);
+  const g = parseInt(h.substring(2, 4), 16);
+  const b = parseInt(h.substring(4, 6), 16);
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+}
+
+// El plugin de matriz se registra UNA vez, antes de crear ninguna gráfica
+// tipo 'matrix' — si no, Chart.js truena al no reconocer el tipo.
+Chart.register(
+  window['chartjs-chart-matrix'].MatrixController,
+  window['chartjs-chart-matrix'].MatrixElement,
+);
+
+const DIAS = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];   // igual que el modelo
+// el eje Y dibuja el primer valor abajo (ver nota #4)
+const DIAS_Y = [...DIAS].reverse();
+const HORAS_X = Array.from({ length: 24 }, (_, h) => String(h).padStart(2, '0'));
+
+// Instancias vivas por id de canvas. Hay que destruir antes de recrear sobre
+// el mismo <canvas> o Chart.js lo deja "ocupado" y ya no se actualiza.
+const CHARTS = {};
+function crearOActualizar(id, config) {
+  if (CHARTS[id]) CHARTS[id].destroy();
+  CHARTS[id] = new Chart(document.getElementById(id).getContext('2d'), config);
+  return CHARTS[id];
+}
+
+// -----------------------------------------------------------------------
+// Estado. VIEW es la única variable "de vista"; ninguna gráfica guarda
+// estado propio, así que nunca pueden quedar desincronizadas entre sí.
+// -----------------------------------------------------------------------
+let DATA = null;
+let VIEW = 'entre_semana';
+
+function elegirFuente() {
+  // Sin selector en este tablero (a diferencia de index.html): mismo orden
+  // de preferencia que usa allá `elegirDefault()` — Atlas si hay, si no
+  // el set de ejemplo local.
+  const f = window.SEENGO_FUENTES || {};
+  if (f.atlas && f.atlas.meta) return f.atlas;
+  if (f.local && f.local.meta) return f.local;
+  return null;
+}
+
+// =========================================================================
+// Gráfica 1 · Rutinas sobre el eje de 24 horas — type: 'bar' (barras
+// horizontales flotantes, indexAxis:'y')
+// =========================================================================
+// En Chart.js una barra flotante se declara como el par [inicio, fin], que
+// es exactamente la forma de una rutina: hora media ± tolerancia. Incluye
+// las NO confirmadas a propósito — mostrar lo que el modelo descartó es
+// parte del argumento del trabajo (el reloj SVG viejo las escondía).
+function chartRutinas() {
+  const filas = [];
+  for (const s of DATA.streams) {
+    const vista = s.vistas[VIEW];
+    for (const r of vista.rutinas) filas.push({ device: s.device, action: s.action, r });
   }
-  // glow para "on" (construido en el namespace SVG correcto)
-  const defs=svgEl('defs',{});
-  const filt=svgEl('filter',{id:'glow',x:'-50%',y:'-50%',width:'200%',height:'200%'});
-  filt.appendChild(svgEl('feGaussianBlur',{stdDeviation:4,result:'b'}));
-  const merge=svgEl('feMerge',{});
-  merge.appendChild(svgEl('feMergeNode',{in:'b'}));
-  merge.appendChild(svgEl('feMergeNode',{in:'SourceGraphic'}));
-  filt.appendChild(merge); defs.appendChild(filt); svg.appendChild(defs);
+  filas.sort((a, b) => a.r.hora - b.r.hora);   // filas ordenadas por hora ascendente
 
-  const streams=(DATA.streams||[]);
-  const rutinas=[];
-  streams.forEach(s=>{
-    (s.vistas[VIEW]?.rutinas||[]).forEach(r=>{
-      if(r.confirmada) rutinas.push({...r,device:s.device,action:s.action});
-    });
-  });
-  rutinas.forEach((r,i)=>{
-    const col=COL[r.action]||'#aaa';
-    const a0=(r.hora-r.tolerancia_h)/24*2*Math.PI, a1=(r.hora+r.tolerancia_h)/24*2*Math.PI;
-    const large=(a1-a0)>Math.PI?1:0;
-    const [sx,sy]=pt(r.hora-r.tolerancia_h,R),[ex,ey]=pt(r.hora+r.tolerancia_h,R);
-    const arc=svgEl('path',{d:`M ${sx} ${sy} A ${R} ${R} 0 ${large} 1 ${ex} ${ey}`,
-      fill:'none',stroke:col,'stroke-width':7,'stroke-linecap':'round',
-      class:'rut','data-hora':r.hora.toFixed(3),opacity:.85});
-    arc.style.filter = r.action==='on' ? 'url(#glow)' : '';
-    svg.appendChild(arc);
-    const [dx,dy]=pt(r.hora,R);
-    const dot=svgEl('circle',{cx:dx,cy:dy,r:6,fill:col,class:'rut','data-hora':r.hora.toFixed(3)});
-    dot.style.filter = r.action==='on' ? 'url(#glow)' : '';
-    svg.appendChild(dot);
-  });
-  drawRutList(rutinas);
-  // centro: nº de rutinas
-  const c=svgEl('text',{x:CX,y:CY-6,'text-anchor':'middle',fill:INK,
-    'font-family':MONO,'font-size':40,'font-weight':600});
-  c.textContent=rutinas.length; svg.appendChild(c);
-  const c2=svgEl('text',{x:CX,y:CY+18,'text-anchor':'middle',fill:MUT,
-    'font-family':MONO,'font-size':12}); c2.textContent='rutinas';
-  svg.appendChild(c2);
-}
+  const labels = filas.map((f) => `${f.device} · ${f.action}`);
+  const data = filas.map((f) => (
+    [f.r.hora - f.r.tolerancia_h, f.r.hora + f.r.tolerancia_h]
+  ));
 
-function drawRutList(rutinas){
-  const host=document.getElementById('rutList'); host.innerHTML='';
-  if(!rutinas.length){host.innerHTML='<div class="empty">Sin rutinas confirmadas en esta vista.</div>';return;}
-  rutinas.sort((a,b)=>a.hora-b.hora).forEach((r,i)=>{
-    const col=COL[r.action]||'#aaa';
-    const el=document.createElement('div'); el.className='item'; el.tabIndex=0;
-    el.innerHTML=`<span class="sw" style="background:${col}"></span>`+
-      `<span class="h">${r.hora_hhmm}</span>`+
-      `<span class="d">${r.device} · ${r.action} ·±${r.tolerancia_hhmm} · ${r.dias_cubiertos}/${r.posibles}d</span>`+
-      `<span class="badge b-${r.confianza}">${r.confianza}</span>`;
-    const hi=()=>highlight(r.hora);
-    el.addEventListener('mouseenter',hi); el.addEventListener('focus',hi);
-    el.addEventListener('mouseleave',()=>highlight(null));
-    el.addEventListener('blur',()=>highlight(null));
-    host.appendChild(el);
-  });
-}
-function highlight(hora){
-  const nodes=document.querySelectorAll('#dial .rut');
-  if(hora==null){nodes.forEach(n=>n.classList.remove('dim'));return;}
-  const key=hora.toFixed(3);
-  nodes.forEach(n=>n.classList.toggle('dim', n.getAttribute('data-hora')!==key));
-}
-
-function drawFunnel(){
-  const m=DATA.meta; const conf=m.eventos_crudos-m.eventos_filtrados_confianza;
-  const steps=[
-    {n:m.eventos_crudos,l:'eventos crudos'},
-    {n:conf,l:'tras filtro de confianza'},
-    {n:m.interacciones,l:'interacciones reales (debounce)'},
-  ];
-  const host=document.getElementById('funnel'); host.innerHTML='';
-  steps.forEach((s,i)=>{
-    const d=document.createElement('div'); d.className='fstep';
-    d.innerHTML=`<div class="n">${s.n.toLocaleString('es-MX')}</div><div class="l">${s.l}</div>`;
-    host.appendChild(d);
-    if(i<steps.length-1){const a=document.createElement('div');
-      a.className='fstep arrow';a.style.flex='0 0 24px';a.style.border='0';a.style.background='none';
-      a.style.display='flex';a.style.alignItems='center';a.style.justifyContent='center';
-      a.style.fontSize='20px';a.textContent='→';host.appendChild(a);}
+  crearOActualizar('chRutinas', {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{
+        data,
+        minBarLength: 3,   // una rutina muy puntual (±5 min) sigue siendo visible
+        backgroundColor: (ctx) => {
+          const f = filas[ctx.dataIndex];
+          return f.r.confirmada ? colorAccion(f.action) : 'transparent';
+        },
+        borderColor: (ctx) => colorAccion(filas[ctx.dataIndex].action),
+        borderWidth: (ctx) => (filas[ctx.dataIndex].r.confirmada ? 0 : 2),
+        borderSkipped: false,
+      }],
+    },
+    options: {
+      indexAxis: 'y',
+      maintainAspectRatio: false,
+      scales: {
+        x: {
+          min: 0, max: 24,   // fijo a propósito: comparable entre las 3 vistas
+          ticks: {
+            stepSize: 2,
+            autoSkip: false,   // fijo cada 2h siempre, sin que se salte por ancho
+            color: MUT,
+            callback: (v) => String(((v % 24) + 24) % 24).padStart(2, '0'),
+          },
+          grid: { color: LINE },
+        },
+        y: {
+          ticks: { color: MUT, font: { family: MONO, size: 10 } },
+          grid: { display: false },
+        },
+      },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: (ctx) => {
+              const f = filas[ctx.dataIndex].r;
+              const estado = f.confirmada ? '' : ' · NO confirmada';
+              return `${f.hora_hhmm} ± ${f.tolerancia_hhmm} · ${f.confianza} · ` +
+                     `${f.dias_cubiertos}/${f.posibles} días${estado}`;
+            },
+          },
+        },
+      },
+    },
   });
 }
 
-function drawDetail(){
-  const host=document.getElementById('detail'); host.innerHTML='';
-  const byDev={};
-  DATA.streams.forEach(s=>{(byDev[s.device]=byDev[s.device]||[]).push(s);});
-  const orden=Object.keys(byDev).sort();
-  for(const dev of orden){
-    const h=document.createElement('div'); h.className='devhead'; h.textContent=dev;
-    host.appendChild(h);
-    byDev[dev].sort((a,b)=>confCount(b)-confCount(a));
-    byDev[dev].forEach(s=>{
-      const v=s.vistas[VIEW]; const col=COL[s.action]||'#aaa';
-      const row=document.createElement('div'); row.className='streamrow';
-      const bands=(v.rutinas||[]).map(r=>{
-        const left=((r.hora-r.tolerancia_h)/24*100), w=Math.max((2*r.tolerancia_h/24*100),1.2);
-        return `<div class="band ${r.confirmada?'':'un'}" title="${r.hora_hhmm} ±${r.tolerancia_hhmm} · ${r.confianza}"
-          style="left:${left}%;width:${w}%;background:${r.confirmada?col:'transparent'}"></div>`;
-      }).join('');
-      const chips=(v.rutinas||[]).map(r=>
-        `<span class="tag">${r.confirmada?'✓':'○'} ${r.hora_hhmm} <span class="badge b-${r.confianza}">${r.confianza}</span> ${r.dias_cubiertos}/${r.posibles}d</span>`
-      ).join('') || '<span class="tag">sin cluster</span>';
-      row.innerHTML=
-        `<div class="streamtop"><span class="name">${s.device}</span>`+
-        `<span class="act" style="color:${col};border-color:${col}66">${s.action}</span>`+
-        `<span class="meta">${s.interacciones} interacciones · ruido ${v.ruido.length}</span></div>`+
-        `<div class="track">${bands}</div>`+
-        `<div class="trlabels"><span>00</span><span>06</span><span>12</span><span>18</span><span>24</span></div>`+
-        `<div style="margin-top:8px">${chips}</div>`+
-        `<div class="heatmap"><div class="hmtitle">Mapa semanal · lun–dom, todas las semanas</div>`+
-        `<div class="hmhost"></div></div>`;
-      host.appendChild(row);
-      if(s.mapa_semanal) drawHeatmap(row.querySelector('.hmhost'), s.mapa_semanal, col);
-    });
-  }
+// =========================================================================
+// Gráfica 2 · Mapa de calor semanal — type: 'matrix' (chartjs-chart-matrix)
+// =========================================================================
+// Aplana la grilla 7×24 de `mapa_semanal` del stream elegido; la única
+// cuenta involucrada (interacciones por celda) ya viene hecha del modelo.
+function poblarSelectorMapa() {
+  const sel = document.getElementById('selMapa');
+  const previo = sel.value;
+  sel.innerHTML = '';
+  DATA.streams.forEach((s, i) => {
+    const op = document.createElement('option');
+    op.value = String(i);
+    op.textContent = `${s.device} · ${s.action}`;
+    sel.appendChild(op);
+  });
+  // conserva el stream elegido si sigue existiendo tras redibujar
+  if (previo && [...sel.options].some((o) => o.value === previo)) sel.value = previo;
 }
-function confCount(s){return Object.values(s.vistas).reduce((a,v)=>a+v.rutinas.filter(r=>r.confirmada).length,0);}
 
-const DIAS_SEM=['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'];
-function drawHeatmap(host, grid, color){
-  const max=Math.max(1, ...grid.map(fila=>Math.max(...fila)));
-  const wrap=document.createElement('div'); wrap.className='hmgrid';
-  DIAS_SEM.forEach((lab,d)=>{
-    const l=document.createElement('div'); l.className='hmrow-label'; l.textContent=lab;
-    wrap.appendChild(l);
-    for(let h=0;h<24;h++){
-      const n=grid[d][h];
-      const cell=document.createElement('div'); cell.className='hmcell';
-      if(n>0){ cell.style.background=color; cell.style.opacity=(0.15+0.85*(n/max)).toFixed(2); }
-      cell.title=`${lab} ${String(h).padStart(2,'0')}:00 · ${n} interacci${n===1?'ón':'ones'}`;
-      wrap.appendChild(cell);
+function chartMapa() {
+  const idx = Number(document.getElementById('selMapa').value || 0);
+  const stream = DATA.streams[idx];
+  if (!stream) return;
+
+  const PISO = 0.15;   // para que una celda con valor 1 no quede invisible
+  let max = 0;
+  const celdas = [];
+  for (let dia = 0; dia < 7; dia++) {
+    for (let hora = 0; hora < 24; hora++) {
+      const v = stream.mapa_semanal[dia][hora];
+      celdas.push({ x: HORAS_X[hora], y: DIAS[dia], v });
+      if (v > max) max = v;
     }
+  }
+  const base = colorAccion(stream.action);
+  const grisTenue = hexToRgba(LINE, 0.35);
+
+  crearOActualizar('chMapa', {
+    type: 'matrix',
+    data: {
+      datasets: [{
+        data: celdas,
+        backgroundColor: (ctx) => {
+          const v = ctx.raw ? ctx.raw.v : 0;
+          if (!v) return grisTenue;   // celda en cero: gris muy tenue
+          return hexToRgba(base, PISO + (1 - PISO) * (v / max));
+        },
+        borderWidth: 0,
+        width: (ctx) => {
+          const area = ctx.chart.chartArea;
+          return area ? area.width / 24 - 2 : 0;   // ~2px de gap entre celdas
+        },
+        height: (ctx) => {
+          const area = ctx.chart.chartArea;
+          return area ? area.height / 7 - 2 : 0;
+        },
+      }],
+    },
+    options: {
+      maintainAspectRatio: false,
+      scales: {
+        // type:'linear' con callback vacío no renderiza etiquetas de hora
+        // (nota #3): ambos ejes van en 'category', con las MISMAS cadenas
+        // que usan las celdas como x/y (no índices numéricos).
+        x: {
+          type: 'category', labels: HORAS_X, offset: true,
+          ticks: { autoSkip: false, color: MUT, font: { family: MONO, size: 9 } },
+          grid: { display: false },
+        },
+        y: {
+          // arreglo invertido para que Lun quede arriba y Dom abajo (nota #4;
+          // la opción `reverse:true` de la escala no da este resultado aquí)
+          type: 'category', labels: DIAS_Y, offset: true,
+          ticks: { color: MUT, font: { family: MONO, size: 10 } },
+          grid: { display: false },
+        },
+      },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: (ctx) => `${ctx.raw.y} ${ctx.raw.x}:00 · ${ctx.raw.v} interacciones`,
+          },
+        },
+      },
+    },
   });
-  host.innerHTML=''; host.appendChild(wrap);
-  const hrs=document.createElement('div'); hrs.className='hmhours';
-  for(let h=0;h<24;h++){
-    const s=document.createElement('span'); s.textContent = h%6===0 ? String(h).padStart(2,'0') : '';
-    hrs.appendChild(s);
-  }
-  host.appendChild(hrs);
 }
 
-// ---------------------------------------------------------------
-// Sugerencias y aceptación (1 = sí, 0 = no, null = pendiente).
-// En modo servidor (http) y fuente Atlas, las pendientes traen botones
-// Sí/No que registran la respuesta en Mongo vía POST.
-// ---------------------------------------------------------------
-function drawSugerencias(){
-  const card=document.getElementById('sugCard');
-  const s=DATA.sugerencias;
-  if(!s||!s.total){card.style.display='none';return;}
-  card.style.display='';
-  const resp=s.aceptadas+s.rechazadas;
-  const tasa=s.tasa_aceptacion==null?'—':Math.round(s.tasa_aceptacion*100)+'%';
-  const seg=(n,c)=>n?`<i style="width:${(n/s.total*100).toFixed(1)}%;background:${c}"></i>`:'';
-  document.getElementById('sugTasa').innerHTML=
-    `<div class="big">${tasa}</div>`+
-    `<div class="lbl">tasa de aceptación${resp?` · ${s.aceptadas} de ${resp} respondidas`:' · sin respuestas aún'}</div>`+
-    `<div class="sugbar">${seg(s.aceptadas,getVar('--ok'))}${seg(s.rechazadas,getVar('--alert'))}${seg(s.pendientes,'#3a3f5c')}</div>`+
-    `<div class="sugcounts"><span><b>${s.aceptadas}</b> aceptadas (sí)</span>`+
-    `<span><b>${s.rechazadas}</b> rechazadas (no)</span>`+
-    `<span><b>${s.pendientes}</b> pendientes</span></div>`;
-  const list=document.getElementById('sugList'); list.innerHTML='';
-  const puedeResponder=location.protocol.indexOf('http')===0&&FUENTE==='atlas';
-  s.lista.forEach(it=>{
-    const el=document.createElement('div'); el.className='sugitem';
-    const est=it.aceptada===1?'<span class="est est-si">✓</span>'
-      :it.aceptada===0?'<span class="est est-no">✗</span>'
-      :'<span class="est est-pend">…</span>';
-    const sub=[it.tipo,it.contexto,it.nivel,
-      it.respondida?('respondida '+String(it.respondida).slice(0,10)):'pendiente']
-      .filter(Boolean).join(' · ');
-    el.innerHTML=`${est}<div class="msg">${it.mensaje}<div class="sub">${sub}</div></div>`;
-    if(it.aceptada==null&&puedeResponder){
-      const btns=document.createElement('div'); btns.className='sugbtns';
-      const mk=(t,v)=>{const b=document.createElement('button');b.textContent=t;
-        b.addEventListener('click',()=>responderSugerencia(it.clave,v,btns));return b;};
-      btns.appendChild(mk('Sí',1)); btns.appendChild(mk('No',0));
-      el.appendChild(btns);
-    }
-    list.appendChild(el);
+// =========================================================================
+// Gráfica 3 · De ruido a señal — type: 'bar' horizontal, 3 barras
+// =========================================================================
+// `eventos_filtrados_confianza` es el número DESCARTADO por el filtro de
+// confianza, no el que sobrevive (nota #5) — el segundo escalón es la resta.
+function chartEmbudo() {
+  const m = DATA.meta;
+  const sobrevivenFiltro = m.eventos_crudos - m.eventos_filtrados_confianza;
+  const fmt = (n) => n.toLocaleString('es-MX');
+
+  crearOActualizar('chEmbudo', {
+    type: 'bar',
+    data: {
+      labels: [
+        'Eventos crudos',
+        'Sobreviven al filtro de confianza',
+        'Interacciones (tras debounce)',
+      ],
+      datasets: [{
+        data: [m.eventos_crudos, sobrevivenFiltro, m.interacciones],
+        backgroundColor: [
+          hexToRgba(TOGGLE, 0.8), hexToRgba(OFF, 0.8), hexToRgba(ON, 0.8),
+        ],
+        borderRadius: 6,
+      }],
+    },
+    options: {
+      indexAxis: 'y',
+      maintainAspectRatio: false,
+      scales: {
+        x: { ticks: { color: MUT, callback: (v) => fmt(v) }, grid: { color: LINE } },
+        y: { ticks: { color: MUT }, grid: { display: false } },
+      },
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: (ctx) => fmt(ctx.parsed.x) } },
+      },
+    },
   });
 }
 
-async function responderSugerencia(clave,v,btns){
-  [...btns.querySelectorAll('button')].forEach(b=>b.disabled=true);
-  try{
-    const r=await fetch('/api/sugerencias/responder',{method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({clave:clave,aceptada:v})});
-    const d=await r.json();
-    if(d.ok){
-      if(FUENTES.atlas) FUENTES.atlas.sugerencias=d.sugerencias;
-      if(FUENTE==='atlas'){DATA.sugerencias=d.sugerencias;drawSugerencias();}
-    }else{
-      alert('No se pudo guardar: '+(d.error||'error desconocido'));
-      [...btns.querySelectorAll('button')].forEach(b=>b.disabled=false);
+// =========================================================================
+// Gráfica 4 · Distribución de confianza — type: 'doughnut'
+// =========================================================================
+// Cuenta rutinas de la vista activa por el nivel que ya asignó `_confianza()`
+// en el modelo (ALTA/MEDIA/BAJA según cobertura); no se recalcula el umbral.
+function chartConfianza() {
+  const conteo = { ALTA: 0, MEDIA: 0, BAJA: 0 };
+  for (const s of DATA.streams) {
+    for (const r of s.vistas[VIEW].rutinas) conteo[r.confianza]++;
+  }
+
+  crearOActualizar('chConfianza', {
+    type: 'doughnut',
+    data: {
+      labels: ['Alta', 'Media', 'Baja'],
+      datasets: [{
+        data: [conteo.ALTA, conteo.MEDIA, conteo.BAJA],
+        backgroundColor: [CONF_ALTA, CONF_MEDIA, CONF_BAJA],
+        borderColor: PANEL,
+        borderWidth: 2,
+      }],
+    },
+    options: {
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: 'bottom',
+          labels: { color: MUT, font: { family: MONO, size: 11 } },
+        },
+        tooltip: { callbacks: { label: (ctx) => `${ctx.label}: ${ctx.parsed}` } },
+      },
+    },
+  });
+}
+
+// =========================================================================
+// Gráfica 5 · Interacciones por hora del día — type: 'bar' vertical
+// =========================================================================
+// Suma por columnas los `mapa_semanal` de TODOS los streams (única suma
+// permitida en esta pantalla). No depende de VIEW: mapa_semanal ya viene
+// agregado con todos los días, tal como lo calcula `mapa_semanal()` en el
+// modelo. Sirve de verificación cruzada contra la gráfica 1.
+function chartInteracciones() {
+  const totales = new Array(24).fill(0);
+  for (const s of DATA.streams) {
+    for (const fila of s.mapa_semanal) {
+      fila.forEach((v, h) => { totales[h] += v; });
     }
-  }catch(e){
-    alert('Sin conexión con el servidor en vivo.');
-    [...btns.querySelectorAll('button')].forEach(b=>b.disabled=false);
   }
+
+  crearOActualizar('chHoras', {
+    type: 'bar',
+    data: {
+      labels: HORAS_X,
+      datasets: [{
+        data: totales, backgroundColor: hexToRgba(ON, 0.75), borderRadius: 4,
+      }],
+    },
+    options: {
+      maintainAspectRatio: false,
+      scales: {
+        x: {
+          ticks: { color: MUT, font: { family: MONO, size: 9 } },
+          grid: { display: false },
+        },
+        y: { ticks: { color: MUT }, grid: { color: LINE }, beginAtZero: true },
+      },
+      plugins: { legend: { display: false } },
+    },
+  });
 }
 
-function renderAll(){
-  const m=DATA.meta;
-  const info=FUENTE_INFO[FUENTE];
-  const pref=info?`${info.label} · `:'';
-  document.getElementById('subtitle').textContent=
-    `${pref}${m.rango.desde} → ${m.rango.hasta} · ${m.rango.dias_activos} días activos · ${m.tz}`;
-  const host=document.getElementById('alertHost'); host.innerHTML='';
-  const a=DATA.ausencia_larga;
-  if(a && a.nivel!=='ninguno'){
-    const el=document.createElement('div'); el.className='alerta '+(a.nivel==='aviso'?'aviso':'');
-    el.innerHTML=`<div class="dot"></div><div><h3>${a.nivel==='alerta'?'Alerta de ausencia':'Aviso de ausencia'} · ${a.hueco_maximo_dias} días</h3>`+
-      `<p>${a.mensaje}${a.ventana?` (${a.ventana.desde} → ${a.ventana.hasta})`:''}</p></div>`;
-    host.appendChild(el);
-  }
-  drawDial(); drawFunnel(); drawSugerencias(); drawDetail();
+// -----------------------------------------------------------------------
+// Panel de alerta de ausencia (no es una gráfica: solo lee ausencia_larga).
+// -----------------------------------------------------------------------
+function drawAlerta() {
+  const host = document.getElementById('alertHost');
+  host.innerHTML = '';
+  const a = DATA.ausencia_larga;
+  if (!a || a.nivel === 'ninguno') return;
+  const el = document.createElement('div');
+  el.className = `alerta${a.nivel === 'aviso' ? ' aviso' : ''}`;
+  const titulo = a.nivel === 'alerta' ? 'Alerta de ausencia' : 'Aviso de ausencia';
+  const ventana = a.ventana ? ` (${a.ventana.desde} → ${a.ventana.hasta})` : '';
+  el.innerHTML = `<div class="dot"></div><div>` +
+    `<h3>${titulo} · ${a.hueco_maximo_dias} días</h3>` +
+    `<p>${a.mensaje}${ventana}</p></div>`;
+  host.appendChild(el);
 }
 
-document.getElementById('views').addEventListener('click',e=>{
-  const b=e.target.closest('button'); if(!b)return;
-  VIEW=b.dataset.v;
-  [...document.querySelectorAll('#views button')].forEach(x=>x.setAttribute('aria-pressed',x===b));
-  document.getElementById('viewName').textContent=b.textContent.toLowerCase();
+// -----------------------------------------------------------------------
+// Orquestador: única función que redibuja TODO. Al cambiar de vista o de
+// stream (mapa) se llama desde aquí (o solo chartMapa() para el selector,
+// que no depende de VIEW), nunca hay estado repartido entre gráficas.
+// -----------------------------------------------------------------------
+function renderAll() {
+  const m = DATA.meta;
+  const rango = `${m.rango.desde} → ${m.rango.hasta}`;
+  const activos = `${m.rango.dias_activos} días activos`;
+  document.getElementById('subtitle').textContent = `${rango} · ${activos} · ${m.tz}`;
+  drawAlerta();
+  poblarSelectorMapa();
+  chartRutinas();
+  chartMapa();
+  chartEmbudo();
+  chartConfianza();
+  chartInteracciones();
+}
+
+document.getElementById('views').addEventListener('click', (e) => {
+  const b = e.target.closest('button');
+  if (!b) return;
+  VIEW = b.dataset.v;
+  document.querySelectorAll('#views button').forEach((x) => {
+    x.setAttribute('aria-pressed', String(x === b));
+  });
   renderAll();
 });
 
-// ---------------------------------------------------------------
-// Fuentes de datos. Dos orígenes posibles, elegibles con la pestaña:
-//   atlas -> lo que llega de MongoDB Atlas (datos reales, en vivo)
-//   local -> el set de ejemplo del repo (referencia)
-// Todo el tablero se redibuja según la fuente activa.
-// ---------------------------------------------------------------
-const FUENTE_INFO={
-  atlas:{label:'Atlas',sub:'MongoDB · en vivo'},
-  local:{label:'Datos de ejemplo',sub:'referencia'},
-  archivo:{label:'Archivo',sub:'arrastrado'},
-};
-const ORDEN_FUENTES=['atlas','local','archivo'];
-let ultimoGen={atlas:null,local:null,archivo:null};
+// El selector del mapa de calor redibuja SOLO esa gráfica (no todo el
+// tablero): cambiar de stream no cambia la vista ni ninguna otra cifra.
+document.getElementById('selMapa').addEventListener('change', chartMapa);
 
-function fuentesDisponibles(){return ORDEN_FUENTES.filter(k=>FUENTES[k]&&FUENTES[k].meta);}
-
-function drawFuentes(){
-  const host=document.getElementById('fuentes'); if(!host) return;
-  const disp=fuentesDisponibles();
-  host.innerHTML='';
-  if(disp.length<=1){host.style.display='none';return;}   // una sola fuente: sin pestaña
-  host.style.display='flex';
-  disp.forEach(k=>{
-    const info=FUENTE_INFO[k]||{label:k,sub:''};
-    const dias=(FUENTES[k].meta.rango&&FUENTES[k].meta.rango.dias_activos)||0;
-    const b=document.createElement('button');
-    b.dataset.f=k; b.setAttribute('aria-pressed', String(k===FUENTE));
-    b.innerHTML=`<span class="fdot"></span><span>${info.label}</span>`+
-      `<span class="fsub">${info.sub} · ${dias} d</span>`;
-    b.addEventListener('click',()=>usarFuente(k));
-    host.appendChild(b);
-  });
+DATA = elegirFuente();
+if (DATA) {
+  renderAll();
+} else {
+  document.getElementById('subtitle').textContent =
+    'Sin datos — corre el consumidor (consumidor/consumir_mongo.py) ' +
+    'y recarga esta página.';
 }
-
-function usarFuente(f){
-  if(!FUENTES[f]||!FUENTES[f].meta) return;
-  FUENTE=f; DATA=FUENTES[f]; ultimoGen[f]=DATA.meta.generado||null;
-  document.getElementById('drop').style.display='none';
-  drawFuentes(); renderAll();
-}
-
-function elegirDefault(){
-  if(FUENTE&&FUENTES[FUENTE]&&FUENTES[FUENTE].meta) return FUENTE;
-  const disp=fuentesDisponibles();
-  return disp.includes('atlas')?'atlas':(disp[0]||null);
-}
-
-// Acepta un envelope {atlas,local} o un resultado suelto (arrastrado / global viejo).
-function cargarEnvelope(env){
-  if(env&&(('atlas' in env)||('local' in env))){
-    if(env.atlas&&env.atlas.meta) FUENTES.atlas=env.atlas;
-    if(env.local&&env.local.meta) FUENTES.local=env.local;
-  }else if(env&&env.streams){        // resultado suelto (formato viejo o archivo)
-    FUENTES.archivo=env;
-  }
-  const f=elegirDefault();
-  if(f) usarFuente(f); else drawFuentes();
-}
-
-// Carga inicial desde resultados.js (formato nuevo o el viejo de una sola fuente).
-if(window.SEENGO_FUENTES){cargarEnvelope(window.SEENGO_FUENTES);}
-else if(window.SEENGO_RESULTADOS){cargarEnvelope({atlas:window.SEENGO_RESULTADOS});}
-
-// Modo servidor en vivo: sondea /api/fuentes.json cada 2 min, actualiza ambas
-// fuentes y sólo re-dibuja la que estás viendo si cambió (meta.generado). En
-// file:// el fetch falla en silencio y se queda con el snapshot de resultados.js.
-async function seengoVivo(){
-  try{
-    const r=await fetch('/api/fuentes.json',{cache:'no-store'});
-    if(!r.ok) return;
-    const env=await r.json();
-    let nuevas=false;
-    ['atlas','local'].forEach(k=>{
-      if(env[k]&&env[k].meta){ if(!FUENTES[k]) nuevas=true; FUENTES[k]=env[k]; }
-    });
-    if(!FUENTE){const f=elegirDefault(); if(f){usarFuente(f); return;}}
-    if(nuevas) drawFuentes();
-    const cur=FUENTES[FUENTE];
-    const g=cur&&cur.meta&&cur.meta.generado;
-    if(cur&&g!==ultimoGen[FUENTE]){ultimoGen[FUENTE]=g;DATA=cur;renderAll();}
-  }catch(e){/* sin servidor en vivo: se ignora */}
-}
-seengoVivo(); setInterval(seengoVivo,120000);
-
-const drop=document.getElementById('drop');
-['dragover','dragenter'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.style.borderColor='#6ea8ff';}));
-drop.addEventListener('dragleave',()=>drop.style.borderColor='');
-drop.addEventListener('drop',e=>{e.preventDefault();const f=e.dataTransfer.files[0];if(!f)return;
-  const rd=new FileReader();rd.onload=()=>{try{cargarEnvelope(JSON.parse(rd.result));}catch(err){alert('JSON inválido');}};
-  rd.readAsText(f);});
 </script>
 </body>
 </html>
