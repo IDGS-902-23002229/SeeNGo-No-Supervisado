@@ -211,14 +211,13 @@ function crearOActualizar(id, config) {
 let DATA = null;
 let VIEW = 'entre_semana';
 
+// UNA sola fuente: Atlas. Antes existía un envelope {atlas, local} con
+// pestaña para alternar; se eliminó porque tener dos orígenes hacía imposible
+// saber de un vistazo qué se estaba mirando. Si no hay datos, la página lo
+// dice; nunca cae a un set de ejemplo.
 function elegirFuente() {
-  // Sin selector en este tablero (a diferencia de index.html): mismo orden
-  // de preferencia que usa allá `elegirDefault()` — Atlas si hay, si no
-  // el set de ejemplo local.
-  const f = window.SEENGO_FUENTES || {};
-  if (f.atlas && f.atlas.meta) return f.atlas;
-  if (f.local && f.local.meta) return f.local;
-  return null;
+  const r = window.SEENGO_RESULTADOS;
+  return (r && r.meta) ? r : null;
 }
 
 // =========================================================================
