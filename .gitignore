@@ -2,6 +2,8 @@
 .venv/
 __pycache__/
 *.pyc
+# npm (solo se commitea lo vendorizado en pantalla/vendor/, no el árbol)
+node_modules/
 
 # Secretos (nunca subir)
 .env

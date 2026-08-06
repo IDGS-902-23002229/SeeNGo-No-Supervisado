@@ -1,166 +1,215 @@
-# SEENGO — Detector de rutinas del hogar (v3)
+# SEENGO — Detector de rutinas del hogar
 
-Tres piezas **separadas**, más un consumidor que las une:
+Detecta **rutinas de encendido/apagado** de dispositivos del hogar (controlados
+por gestos de mano) y **ausencias prolongadas**, a partir de los eventos que la
+aplicación guarda en MongoDB Atlas. Sin entrenamiento: agrupamiento por densidad
+sobre la hora del día (DBSCAN circular propio) + estadística circular. Pensado
+para correr en una **Raspberry Pi**.
 
 ```
 Modelo-DBscan/
-├── datos/         # ejemplos JSON para importar a Mongo Atlas (+ generador)
+├── datos/         # generador de datos de prueba + siembra en Atlas
 ├── modelo/        # el detector, Python puro (sin numpy/pandas/sklearn)
-├── consumidor/    # lee Mongo (o los JSON) y produce resultados
-└── pantalla/      # vista de un solo archivo, sin servidor ni librerías
+├── consumidor/    # lee Atlas, corre el modelo, sirve la API y el tablero
+├── pantalla/      # el tablero, un solo archivo + Chart.js vendorizado
+└── archivo/       # iteraciones previas, conservadas como evidencia
 ```
 
-## 0. Preparar el entorno (una sola vez)
+**Una sola fuente de datos: MongoDB Atlas.** No hay modo offline ni set de
+ejemplo de respaldo; si Atlas no responde, el sistema lo dice claramente en vez
+de mostrar datos que se confundirían con los reales.
 
-Ya viene un entorno virtual `.venv/` con las dependencias instaladas. Si lo
-recreas desde cero:
+---
+
+## 0. Preparar el entorno (una sola vez)
 
 ```powershell
 python -m venv .venv
 .venv\Scripts\pip install -r requirements.txt
-```
-
-En Windows, `zoneinfo` necesita el paquete `tzdata` (Linux/Raspberry Pi ya
-traen la base de datos IANA del sistema, Windows no) — ya está en
-`requirements.txt` condicionado a `sys_platform == "win32"`.
-
-**En VS Code:** abre esta carpeta, selecciona el intérprete `.venv` (paleta
-de comandos → *Python: Select Interpreter*) y usa:
-- `F5` → elige una de las 3 configuraciones en `.vscode/launch.json`
-  (probar offline, correr contra Mongo, regenerar datos de ejemplo).
-- `Ctrl+Shift+B` → corre la tarea por defecto (`.vscode/tasks.json`): prueba
-  offline con los 3 archivos de ejemplo.
-- Extensiones recomendadas (VS Code las sugiere solas): Python + Pylance, y
-  opcionalmente *Live Server* para ver `pantalla/index.html` con recarga
-  automática cada vez que regeneras `resultados.js`.
-
-## 1. Probar YA, sin tocar Mongo
-
-```powershell
-.venv\Scripts\python consumidor\consumir_mongo.py --archivos "datos/ejemplos_*.json"
-# abre pantalla/index.html en el navegador (doble clic o file://)
-```
-
-Esto corre el modelo sobre los 3 archivos de ejemplo, escribe
-`resultados.json` y `pantalla/resultados.js`, y la pantalla los muestra.
-
-## 2. Cargar los datos de ejemplo a Mongo Atlas
-
-Los archivos ya están en el esquema de tu colección (`deviceId`, `action`,
-`confidence`, `ts` en UTC). No traen `_id`, así que Atlas los asigna solo.
-
-```bash
-mongoimport --uri "$MONGO_URI" --db seengo --collection sign_events \
-  --jsonArray --file datos/ejemplos_claros.json
-# repite con ejemplos_dificiles.json y ejemplos_basura.json
-```
-
-## 3. Correr contra Mongo (ventana rodante)
-
-Opción cómoda para VS Code: copia `.env.example` a `.env` y llena tus datos
-reales ahí (ese archivo está en `.gitignore`, nunca se sube). Se carga solo
-gracias a `python-dotenv`.
-
-```powershell
 copy .env.example .env
 # edita .env con tu MONGO_URI real
-.venv\Scripts\python consumidor\consumir_mongo.py --dias 60
 ```
 
-O sin `.env`, exportando la variable directo en la terminal:
+En Windows, `zoneinfo` necesita el paquete `tzdata` (Linux y Raspberry Pi ya
+traen la base IANA del sistema); ya está en `requirements.txt` condicionado a
+`sys_platform == "win32"`.
+
+**En VS Code:** abre esta carpeta, selecciona el intérprete `.venv` (paleta de
+comandos → *Python: Select Interpreter*) y usa `F5` para elegir entre servidor
+en vivo, corrida contra Atlas o siembra.
+
+---
+
+## 1. Sembrar datos de prueba en Atlas
 
 ```powershell
-$env:MONGO_URI = "mongodb+srv://USUARIO:PASSWORD@cluster.mongodb.net/"
-$env:MONGO_DB = "seengo"
-$env:MONGO_COLL = "sign_events"
-.venv\Scripts\python consumidor\consumir_mongo.py --dias 60
+.venv\Scripts\python datos\sembrar_atlas.py --dry-run     # sólo cuenta
+.venv\Scripts\python datos\sembrar_atlas.py --limpiar     # borra siembra previa y resiembra
 ```
 
-Esto es un proceso **de una sola pasada**: lee Mongo, escribe
-`pantalla/resultados.js` y termina. Para ver datos nuevos hay que volver a
-correrlo y refrescar la página. Si prefieres que se actualice solo, usa el
-servidor en vivo (siguiente sección).
+Inserta **tres capas** que van siempre juntas, porque cada una demuestra una
+fase distinta:
 
-## 4. Tablero en vivo (para dejar corriendo en la Raspberry Pi)
+| Capa | Qué contiene | Qué demuestra |
+|---|---|---|
+| **claros** | Rutinas nítidas: sala 19:30 entre semana y 21:00 el fin de semana, recámara 07:00 y 22:30 | El DBSCAN encuentra los patrones |
+| **difíciles** | Cruce de medianoche (~00:00), un dispositivo con dos rutinas el mismo día (13:30 y 22:30), rutina con desplazamiento, cobertura insuficiente | La diferencia entre candidata y confirmada |
+| **basura** | Confianza 0.20–0.60, ráfagas, duplicados exactos, `deviceId` desconocido, timestamps rotos | La limpieza funcionando en vivo |
 
-`consumidor/servidor.py` es un servidor web que **se actualiza solo**: cada
-30 min (configurable) lee Mongo, corre el modelo y sirve la pantalla. Solo usa
-la librería estándar + pymongo; nada pesado.
+**La base queda sucia a propósito.** Si sólo hubiera datos limpios, la fase de
+preprocesamiento no tendría nada que mostrar y el embudo saldría plano.
+
+Detalles importantes:
+
+- `--limpiar` borra **sólo** los documentos marcados `origen: "seed"`. Los
+  eventos reales de la aplicación nunca se tocan.
+- El calendario se ancla **a la fecha de hoy**, no a fechas fijas, y coloca el
+  hueco de ausencia de 25 días **justo antes** de los datos reales (si cayera
+  encima, se rellenaría y la alerta nunca saltaría).
+- Ese calendario ocupa ~83 días, por eso la ventana por defecto es de **90 días**
+  (`SEENGO_DIAS`). Con 60 se pierde el primer tramo. El script avisa si no cabe.
+
+## 2. Correr el modelo (una pasada)
+
+```powershell
+.venv\Scripts\python consumidor\consumir_mongo.py --dias 90
+```
+
+Lee Atlas, corre el modelo y escribe `resultados.json` y
+`pantalla/resultados.js`. Si Atlas falla, sale con código distinto de cero.
+
+## 3. Tablero en vivo (lo que se presenta)
 
 ```powershell
 .venv\Scripts\python consumidor\servidor.py
 # abre http://localhost:8000/
 ```
 
-Desde otro dispositivo de la misma red (tu celular, otra compu) entra a
-`http://IP-DE-LA-PI:8000/`. La página sondea `/api/fuentes.json` cada 2 min
-y se re-dibuja sola cuando hay datos nuevos.
+Se actualiza solo cada 30 minutos (`SEENGO_REFRESH_MIN`), más el botón
+**"Actualizar ahora"**. Desde otro dispositivo de la misma red:
+`http://IP-DE-LA-PI:8000/`.
 
-Ajustes por variable de entorno (o en `.env`): `SEENGO_PORT` (8000),
-`SEENGO_DIAS` (60), `SEENGO_REFRESH_MIN` (30).
+La página está organizada por las **cinco fases** de la extracción de
+conocimiento, en orden: selección de datos, preprocesamiento, minería,
+interpretación/evaluación y uso del conocimiento.
 
-### Dos fuentes en el tablero (Atlas vs. ejemplo)
+**Por qué la pantalla no habla con Mongo:** el navegador sólo habla con este
+servidor; las credenciales viven en el servidor (la Pi) y nunca llegan al
+navegador. Si Atlas no responde, el servidor sirve la última corrida buena
+guardada en disco, marcada como **obsoleta** y con su hora.
 
-El tablero puede mostrar **dos orígenes de datos**, elegibles con una pestaña
-arriba del título:
+**Arranque automático en la Pi:** `consumidor/seengo.service` (unit de systemd),
+con las instrucciones dentro del archivo.
 
-- **Atlas** — tus datos reales de MongoDB (en vivo con el servidor).
-- **Datos de ejemplo** — el set de referencia del repo, útil para comparar
-  contra una casa con semanas de historia (14 rutinas, ausencia, etc.).
+---
 
-La pestaña aparece sólo cuando hay **al menos dos fuentes** disponibles. Cómo
-se llenan:
+## 4. Cómo usar el modelo desde la app móvil
 
-- El **servidor en vivo** calcula ambas solo (Atlas al refrescar, ejemplo una
-  vez al arrancar). No tienes que hacer nada.
-- En modo manual (sin servidor), corre el consumidor **una vez por fuente** y
-  quedan las dos en `resultados.js` (cada corrida conserva la otra):
+Hay dos vías. Cuál conviene depende de si la app tiene un backend en Python.
 
-  ```powershell
-  .venv\Scripts\python consumidor\consumir_mongo.py --archivos "datos/ejemplos_*.json"
-  .venv\Scripts\python consumidor\consumir_mongo.py --dias 60
-  ```
+### Vía 1 — API REST (recomendada si la app es Flutter, Kotlin, Swift o React Native)
 
-Internamente, `resultados.js` guarda un envelope
-`window.SEENGO_FUENTES = { atlas, local }`. La pantalla acepta también el
-formato viejo de una sola fuente, así que nada se rompe.
+La app sólo consume JSON; no necesita Python ni las credenciales de Mongo. El
+servidor responde con **CORS abierto**, así que se puede llamar desde otro origen.
 
-**Importante — por qué no es la pantalla la que habla con Mongo:** el navegador
-solo habla con *este servidor*; las credenciales viven en el servidor (la Pi),
-nunca llegan al navegador. Por eso el tablero en vivo necesita que Python esté
-corriendo detrás; no es un HTML suelto que consulta la base.
+| Endpoint | Para qué |
+|---|---|
+| `GET /api/salud` | ¿el servicio está vivo y qué tan frescos son los datos? |
+| `GET /api/resultado` | el análisis completo |
+| `GET /api/rutinas?vista=entre_semana` | **sólo las rutinas confirmadas**, ya aplanadas |
+| `GET /api/alertas` | ausencia prolongada y avisos activos |
+| `GET /api/recomendaciones` | capa prescriptiva + aceptación 1/0 |
+| `POST /api/refrescar` | fuerza un recálculo inmediato |
+| `POST /api/recomendaciones/responder` | registra `{clave, aceptada: 1\|0}` |
 
-**Arranque automático al encender la Pi:** hay un `consumidor/seengo.service`
-(unit de systemd) listo para copiar; las instrucciones están dentro del propio
-archivo.
+`vista` puede ser `entre_semana`, `fin_de_semana` o `semana_completa`.
+
+```bash
+curl "http://IP-DEL-SERVIDOR:8000/api/rutinas?vista=entre_semana"
+```
+
+Respuesta real (recortada a una rutina):
+
+```json
+{
+  "vista": "entre_semana",
+  "generado": "2026-08-05T22:51:45.837283-06:00",
+  "obsoleto": false,
+  "total": 8,
+  "rutinas": [
+    {
+      "hora_hhmm": "07:02",
+      "tolerancia_hhmm": "00:06",
+      "n_interacciones": 18,
+      "dias_cubiertos": 18,
+      "posibles": 24,
+      "cobertura": 0.75,
+      "confianza": "MEDIA",
+      "confirmada": true,
+      "dias_semana": ["Lun", "Mar", "Mié", "Jue", "Vie"],
+      "device": "foco-recamara",
+      "action": "off"
+    }
+  ]
+}
+```
+
+El campo `obsoleto` importa: si es `true`, los datos son reales pero de una
+corrida anterior porque no hubo conexión con Atlas. La app debería avisarlo.
+
+### Vía 2 — Módulo importable (si hay un backend Python de por medio)
+
+```python
+from modelo import analizar_desde_atlas, generar_recomendaciones
+
+resultado = analizar_desde_atlas(os.environ["MONGO_URI"])
+print(resultado["meta"]["interacciones"])
+print(generar_recomendaciones(resultado))
+```
+
+Y si el backend ya tiene los eventos y no quiere que el modelo toque la red:
+
+```python
+from modelo import analizar
+resultado = analizar(eventos)      # eventos = lista de dicts
+```
+
+`detector_rutinas.py` **no importa pymongo**: el import es perezoso y vive en
+`modelo/fuente_atlas.py`, así que `from modelo import analizar` funciona aunque
+pymongo no esté instalado. Esa pureza es lo que permite correr el detector en
+la Raspberry Pi sin arrastrar dependencias.
+
+---
 
 ## Qué debe detectar (para verificar)
 
-**Rutinas claras (deben salir CONFIRMADAS):**
-- `foco-sala / on` ~19:30 entre semana · ~21:00 fin de semana (¡se separan!)
-- `foco-sala / off` ~23:10 entre semana
-- `foco-recamara / off` ~07:00 entre semana
-- `foco-recamara / on` ~22:30 todos los días
-
-**Casos difíciles (vulnerabilidades):**
-- `enchufe-sala / on` cruza medianoche → media circular da **00:00**, no 12:00.
+- `foco-sala / on` se **separa**: ~19:30 entre semana y ~21:00 el fin de semana.
+- `enchufe-sala / on` cruza medianoche → la media circular da **00:00**, no 12:00.
 - `foco-cocina / off` tiene **DOS** rutinas (13:30 y 22:30), no una a las 18:00.
-- `foco-patio / on` con *drift* 19:45→21:15 → una rutina de tolerancia ancha.
-- `foco-cocina / on` con confianza baja → **filtrada**, no es rutina.
-- `enchufe-sala / toggle` en pocos días → **BAJA**, sin confirmar.
+- Candidatas por debajo del umbral de cobertura → **no confirmadas**.
+- `dispositivo-fantasma` y la mega-ráfaga de 250 eventos → ruido, nunca rutina.
+- Hueco de **25 días** sin actividad → **ALERTA** de ausencia.
 
-**Basura:** eventos sueltos y una mega-ráfaga de 250 eventos a las 03:00 →
-todo queda como *ruido*; nada se confirma.
+## Ajustes (`CONFIG` en `modelo/detector_rutinas.py`)
 
-**Ausencia larga:** hueco de **25 días** (29-may a 22-jun) → **ALERTA**.
+`tz`, `conf_min` (0.70), `debounce_seg` (90), `eps_horas` (1.0),
+`min_muestras` (3), `min_dias_absoluto` (7), `min_cobertura` (0.60),
+`ausencia_aviso` (15), `ausencia_alerta` (25).
 
-## Ajustes (en `modelo/detector_rutinas.py`, dict `CONFIG`)
+## Variables de entorno
 
-`conf_min`, `debounce_seg`, `eps_horas`, `min_muestras`, `min_dias_absoluto`,
-`min_cobertura`, `ausencia_aviso` (15 d), `ausencia_alerta` (25 d).
+| Variable | Default | Para qué |
+|---|---|---|
+| `MONGO_URI` | — | **obligatoria**, nunca en el código |
+| `MONGO_DB` | `seengo` | base de datos |
+| `MONGO_COLL` | `sign_events` | colección de eventos |
+| `MONGO_COLL_SUG` | `sugerencias` | colección de recomendaciones y respuestas |
+| `SEENGO_PORT` | `8000` | puerto del tablero |
+| `SEENGO_DIAS` | `90` | ventana rodante en días |
+| `SEENGO_REFRESH_MIN` | `30` | cada cuánto se relee Atlas |
 
 ## Seguridad
 
-Rota la contraseña de Mongo que quedó expuesta. El consumidor lee la URI de
-la variable de entorno `MONGO_URI`; **no** la escribas en el código ni en
-`.env.example`. Tu `.env` real está ignorado por git.
+La URI se lee de `MONGO_URI`; **no** la escribas en el código ni en
+`.env.example`. Tu `.env` real está en `.gitignore` y nunca se sube. Rota la
+contraseña de Mongo que quedó expuesta en su momento.
