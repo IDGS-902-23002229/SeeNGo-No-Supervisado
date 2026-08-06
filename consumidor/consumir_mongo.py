@@ -154,17 +154,26 @@ def _coll_sugerencias(cli):
 
 
 def publicar_recomendaciones(nuevas):
-    """Upsert por `clave`: solo inserta las que no existan. Nunca pisa la
-    respuesta (`aceptada`) de una sugerencia ya publicada."""
+    """Upsert por `clave`, separando lo que se refresca de lo que no.
+
+    - `$set` para los campos DESCRIPTIVOS (mensaje, prioridad, evidencia...):
+      si cambian los datos, el texto tiene que seguirlos. Con `$setOnInsert`
+      para todo, el mensaje quedaba congelado en la primera publicación y se
+      llegaba a ver "23 días sin actividad" junto a una alerta de 25.
+    - `$setOnInsert` para la RESPUESTA del usuario y la fecha de creación:
+      eso nunca se pisa, es el dato que estamos midiendo.
+    """
     if not nuevas:
         return 0
     col = _coll_sugerencias(_cliente())
     creada = datetime.now(ZoneInfo("UTC")).isoformat()
     insertadas = 0
     for s in nuevas:
+        descriptivos = {k: v for k, v in s.items() if k != "clave"}
         r = col.update_one(
             {"clave": s["clave"]},
-            {"$setOnInsert": {**s, "creada": creada,
+            {"$set": descriptivos,
+             "$setOnInsert": {"creada": creada,
                               "aceptada": None, "respondida": None}},
             upsert=True)
         if r.upserted_id is not None:
@@ -188,13 +197,42 @@ def responder_recomendacion(clave, aceptada):
 
 
 def recomendaciones_atlas(res):
-    """Publica en Mongo las recomendaciones nuevas del análisis y devuelve el
-    resumen con TODAS (incluidas las respuestas ya dadas por el usuario)."""
-    nuevas = generar_recomendaciones(res)
-    n = publicar_recomendaciones(nuevas)
+    """Publica las recomendaciones del análisis actual y devuelve el resumen.
+
+    Se muestran SÓLO las que se derivan de los datos de esta corrida, cada una
+    enriquecida con la respuesta que el usuario ya haya dado. Si se listaran
+    todas las almacenadas aparecerían recomendaciones huérfanas de análisis
+    viejos, sobre rutinas que ya no existen.
+    """
+    actuales = generar_recomendaciones(res)
+    n = publicar_recomendaciones(actuales)
     if n:
         print(f"Recomendaciones nuevas publicadas en Mongo: {n}")
-    return resumen_aceptacion(leer_recomendaciones())
+
+    # Respuestas guardadas, indexadas por clave.
+    guardadas = {g["clave"]: g for g in leer_recomendaciones() if g.get("clave")}
+    enriquecidas = []
+    for a in actuales:
+        g = guardadas.get(a["clave"], {})
+        enriquecidas.append({**a,
+                             "aceptada": g.get("aceptada"),
+                             "creada": g.get("creada"),
+                             "respondida": g.get("respondida")})
+    return resumen_aceptacion(enriquecidas)
+
+
+def refrescar_respuestas(resumen_actual):
+    """Relee SÓLO las respuestas del usuario y las vuelve a mapear sobre las
+    recomendaciones de la corrida actual. Se usa tras un Sí/No en el tablero:
+    no hace falta volver a consultar los miles de eventos."""
+    guardadas = {g["clave"]: g for g in leer_recomendaciones() if g.get("clave")}
+    lista = []
+    for a in (resumen_actual or {}).get("lista", []):
+        g = guardadas.get(a["clave"], {})
+        lista.append({**a, "aceptada": g.get("aceptada"),
+                      "creada": g.get("creada"),
+                      "respondida": g.get("respondida")})
+    return resumen_aceptacion(lista)
 
 
 # ----------------------------------------------------------------------

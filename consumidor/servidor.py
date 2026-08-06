@@ -57,9 +57,8 @@ except ImportError:
 # Reutiliza la lógica del consumidor (la conexión a Mongo vive allá, no aquí).
 sys.path.insert(0, os.path.dirname(__file__))
 from consumir_mongo import (  # noqa: E402
-    analizar_atlas, CONFIG, leer_recomendaciones, responder_recomendacion,
+    analizar_atlas, CONFIG, responder_recomendacion, refrescar_respuestas,
 )
-from recomendaciones import resumen_aceptacion  # noqa: E402
 
 # ----------------------------------------------------------------------
 # Configuración desde el entorno
@@ -99,9 +98,12 @@ def refrescar():
 
 
 def _refrescar_solo_recomendaciones():
-    """Tras una respuesta del usuario: relee la colección de recomendaciones
-    y actualiza el resumen sin re-consultar todos los eventos."""
-    resumen = resumen_aceptacion(leer_recomendaciones())
+    """Tras una respuesta del usuario: relee sólo las respuestas y las remapea
+    sobre las recomendaciones de la corrida actual, sin volver a consultar los
+    miles de eventos."""
+    with _lock:
+        actual = ((_estado["resultado"] or {}).get("recomendaciones")) or {}
+    resumen = refrescar_respuestas(actual)
     with _lock:
         if _estado["resultado"] is not None:
             _estado["resultado"]["recomendaciones"] = resumen
