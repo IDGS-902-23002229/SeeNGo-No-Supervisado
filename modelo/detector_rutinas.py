@@ -112,24 +112,64 @@ def dbscan_circular(horas, eps, min_muestras):
 # 1) Normalización  2) Debounce
 # ----------------------------------------------------------------------
 def normalizar(eventos, cfg):
+    """Limpia la entrada cruda y la pasa a hora LOCAL.
+
+    Descarta, en este orden y contando POR MOTIVO:
+      1. confianza por debajo de `conf_min` (reconocimiento dudoso),
+      2. timestamp inválido (texto que no es fecha, vacío, fuera de rango),
+      3. duplicado exacto: mismo (dispositivo, acción, ts) ya visto — pasa
+         cuando el cliente reintenta un envío que en realidad sí llegó.
+
+    Devuelve (normalizados, descartes). El desglose de `descartes` existe
+    porque la fase de preprocesamiento hay que poder MOSTRARLA: saber cuántos
+    eventos se cayeron no sirve si no se sabe por qué se cayó cada uno.
+    """
     tz = ZoneInfo(cfg["tz"]); utc = ZoneInfo("UTC")
-    out, filtrados = [], 0
+    out = []
+    descartes = {"confianza": 0, "ts_invalido": 0, "duplicados": 0}
+    vistos = set()
     for e in eventos:
-        if float(e.get("confidence", 1.0)) < cfg["conf_min"]:
-            filtrados += 1
+        # 1) Confianza. Una confianza no numérica es tan inútil como una baja.
+        try:
+            if float(e.get("confidence", 1.0)) < cfg["conf_min"]:
+                descartes["confianza"] += 1
+                continue
+        except (TypeError, ValueError):
+            descartes["confianza"] += 1
             continue
-        ts = e["ts"]
-        dt = datetime.fromisoformat(ts) if isinstance(ts, str) else ts
-        if dt.tzinfo is None:
-            dt = dt.replace(tzinfo=utc)
-        loc = dt.astimezone(tz)
+
+        # 2) Timestamp. Los `ts` rotos llegan de verdad (relojes sin
+        #    sincronizar, reintentos a medias). Antes reventaban
+        #    fromisoformat() y tumbaban el análisis COMPLETO; ahora se
+        #    cuentan y el resto de los eventos sigue su camino.
+        ts = e.get("ts")
+        try:
+            dt = datetime.fromisoformat(ts) if isinstance(ts, str) else ts
+            if dt is None:
+                raise ValueError("ts ausente")
+            if dt.tzinfo is None:
+                dt = dt.replace(tzinfo=utc)
+            loc = dt.astimezone(tz)
+        except (TypeError, ValueError, OverflowError):
+            descartes["ts_invalido"] += 1
+            continue
+
+        # 3) Duplicado exacto. No es una acción humana distinta, es el mismo
+        #    evento contado dos veces: se elimina antes de agrupar. (El
+        #    debounce igual los colapsaría, pero así quedan contabilizados.)
+        clave = (e.get("deviceId"), e.get("action"), ts)
+        if clave in vistos:
+            descartes["duplicados"] += 1
+            continue
+        vistos.add(clave)
+
         out.append({
             "dev": e["deviceId"], "act": e["action"], "dt": loc,
             "fecha": loc.date(),
             "hora": loc.hour + loc.minute / 60 + loc.second / 3600,
         })
     out.sort(key=lambda r: (r["dev"], r["act"], r["dt"]))
-    return out, filtrados
+    return out, descartes
 
 
 def debounce(norm, cfg):
@@ -259,7 +299,7 @@ def ausencia_larga(fechas_activas, cfg, ahora=None):
 # ----------------------------------------------------------------------
 def analizar(eventos, cfg=None, ahora=None):
     cfg = {**CONFIG, **(cfg or {})}
-    norm, filtrados = normalizar(eventos, cfg)
+    norm, descartes = normalizar(eventos, cfg)
     inter = debounce(norm, cfg)
 
     fechas_activas = {r["fecha"] for r in norm}
@@ -281,7 +321,10 @@ def analizar(eventos, cfg=None, ahora=None):
         "meta": {
             "tz": cfg["tz"],
             "eventos_crudos": len(eventos),
-            "eventos_filtrados_confianza": filtrados,
+            # Se conserva el nombre viejo (lo consume el tablero) y además va
+            # el desglose completo por motivo, para la fase de preprocesamiento.
+            "eventos_filtrados_confianza": descartes["confianza"],
+            "descartes": descartes,
             "interacciones": len(inter),
             "rango": {
                 "desde": fa[0].isoformat() if fa else None,
