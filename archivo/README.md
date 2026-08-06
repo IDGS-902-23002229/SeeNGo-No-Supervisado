@@ -22,5 +22,9 @@ Qué es cada cosa:
 - **`pantalla-svg/index.html`** — el primer tablero, dibujado a mano con SVG y
   JavaScript vanilla. Lo reemplazó `pantalla/index.html` (Chart.js), que organiza
   las gráficas según las cinco fases de la extracción de conocimiento.
+- **`sugerencias_ejemplo.json`** — respuestas de aceptación de demostración,
+  usadas cuando el tablero todavía tenía una segunda fuente de datos "local".
+  Al quedar Atlas como fuente única, las recomendaciones y sus respuestas viven
+  en la colección `sugerencias` de Mongo y este archivo dejó de leerse.
 
 El código en uso vive en `modelo/`, `consumidor/`, `datos/` y `pantalla/`.
